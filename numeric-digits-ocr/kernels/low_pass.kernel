@@ -1,0 +1,19 @@
+{
+	"kernels" : [
+	{
+		"name": "Average Low-pass Filter",
+		"kernel": [
+			[ 1, 1, 1 ],
+			[ 1, 1, 1 ],
+			[ 1, 1, 1 ]
+		]
+	},{
+		"name": "Weak Low-pass Filter",
+		"kernel": [
+			[ 0, 1, 0 ],
+			[ 1, 4, 1 ],
+			[ 0, 1, 0 ]	
+		]
+	}
+	]
+}

@@ -1,17 +1,6 @@
-# Numeric-Digit-OCR
+The MIT License (MIT)
 
-## 1. Description
-
-An Optical Character Recognition (OCR) system designed to recognize numeric digits using statistical methods.
-
-## <a name="license"></a>License
-
-<img align="right" src="http://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png">
-
-The contents of this library are licensed under the 
-[MIT License](http://opensource.org/licenses/MIT):
-
-Copyright &copy; 2015 Matthew Rodusek
+Copyright (c) 2015 Matthew Rodusek
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

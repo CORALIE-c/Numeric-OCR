@@ -318,7 +318,7 @@ namespace rodu4140{
 
     // Handle the name of the kernel
     if(!kernel_def.HasMember("name")){
-      name = "untitled filter " + (++i);
+      name = "untitled filter " + std::to_string(++i);
     }else{
       rapidjson::Value& name_attribute = kernel_def["name"];
       if(!name_attribute.IsString()){

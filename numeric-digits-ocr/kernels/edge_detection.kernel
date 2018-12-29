@@ -1,61 +1,61 @@
 {
-	"kernels" : [
-	{
-		"name": "Edge Detection Filter",
-		"kernel": [
-			[  1, 0, -1 ],
-			[  0, 0,  0 ],
-			[ -1, 0,  1 ]
-		]
-	},{
-		"name": "Top Edge Detection Filter",
-		"kernel": [
-			[ -1, -1, -1 ],
-			[  0,  0,  0 ],
-			[  1,  1,  1 ]
-		]
-	},{
-		"name": "Right Edge Detection Filter",
-		"kernel": [
-			[ 1, 0, -1 ],
-			[ 1, 0, -1 ],
-			[ 1, 0, -1 ]
-		]
-	},{
-		"name": "Bottom Edge Detection Filter",
-		"kernel": [
-			[  1,  1,  1 ],
-			[  0,  0,  0 ],
-			[ -1, -1, -1 ]
-		]
-	},{
-		"name": "Left Edge Detection Filter",
-		"kernel": [
-			[ -1, 0, 1 ],
-			[ -1, 0, 1 ],
-			[ -1, 0, 1 ]
-		]
-	},{
-		"name": "Average Edge Detection Filter",
-		"kernel": [
-			[  0, -1,  0 ],
-			[ -1,  4, -1 ],
-			[  0, -1,  0 ]
-		]
-	},{
-		"name": "High Edge Detection Filter",
-		"kernel": [
-			[ -1, -1, -1 ],
-			[ -1,  8, -1 ],
-			[ -1, -1, -1 ]
-		]
-	},{
-		"name": "Sobel Edge Detection",
-		"kernel": [
-			[ -1, 0, 1 ],
-			[ -2, 0, 2 ],
-			[ -1, 0, 1 ]
-		]
-	}
-	]
+  "kernels" : [
+  {
+    "name": "Edge Detection Filter",
+    "kernel": [
+      [  1, 0, -1 ],
+      [  0, 0,  0 ],
+      [ -1, 0,  1 ]
+    ]
+  },{
+    "name": "Top Edge Detection Filter",
+    "kernel": [
+      [ -1, -1, -1 ],
+      [  0,  0,  0 ],
+      [  1,  1,  1 ]
+    ]
+  },{
+    "name": "Right Edge Detection Filter",
+    "kernel": [
+      [ 1, 0, -1 ],
+      [ 1, 0, -1 ],
+      [ 1, 0, -1 ]
+    ]
+  },{
+    "name": "Bottom Edge Detection Filter",
+    "kernel": [
+      [  1,  1,  1 ],
+      [  0,  0,  0 ],
+      [ -1, -1, -1 ]
+    ]
+  },{
+    "name": "Left Edge Detection Filter",
+    "kernel": [
+      [ -1, 0, 1 ],
+      [ -1, 0, 1 ],
+      [ -1, 0, 1 ]
+    ]
+  },{
+    "name": "Average Edge Detection Filter",
+    "kernel": [
+      [  0, -1,  0 ],
+      [ -1,  4, -1 ],
+      [  0, -1,  0 ]
+    ]
+  },{
+    "name": "High Edge Detection Filter",
+    "kernel": [
+      [ -1, -1, -1 ],
+      [ -1,  8, -1 ],
+      [ -1, -1, -1 ]
+    ]
+  },{
+    "name": "Sobel Edge Detection",
+    "kernel": [
+      [ -1, 0, 1 ],
+      [ -2, 0, 2 ],
+      [ -1, 0, 1 ]
+    ]
+  }
+  ]
 }

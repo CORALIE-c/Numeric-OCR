@@ -11,7 +11,7 @@
 #define DIRENT_H
 
 #ifdef __GNUC__
-#	pragma GCC system_header /* Added to stop unused warnings */
+#  pragma GCC system_header /* Added to stop unused warnings */
 #endif
 /*
  * Define architecture flags so we don't need to include windows.h.

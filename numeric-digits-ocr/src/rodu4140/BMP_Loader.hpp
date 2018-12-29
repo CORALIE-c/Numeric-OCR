@@ -26,21 +26,21 @@
 
 namespace rodu4140 {
 
-	typedef enum image_status_{
-		IS_SUCCESS        = 0,
-		IS_FILE_NOT_FOUND = 1,
-		IS_TYPE_INVALID   = 2
-	} image_load_status;
+  typedef enum image_status_{
+    IS_SUCCESS        = 0,
+    IS_FILE_NOT_FOUND = 1,
+    IS_TYPE_INVALID   = 2
+  } image_load_status;
 
-	int load_bmp_image_color( const char* filename, Image** image );
+  int load_bmp_image_color( const char* filename, Image** image );
 
-	int load_bmp_image_grayscale( const char* filename, Image** image );
+  int load_bmp_image_grayscale( const char* filename, Image** image );
 
-	int load_bmp_image_binary( const char* filename, Image** image );
+  int load_bmp_image_binary( const char* filename, Image** image );
 
-	bool save_bmp_image( const char* filename, Image* image );
+  bool save_bmp_image( const char* filename, Image* image );
 
-	void destroy_image( Image** image );
+  void destroy_image( Image** image );
 
 }  // namespace rodu4140
 

@@ -27,153 +27,153 @@
 
 namespace rodu4140{
 
-	/////////////////////////////////////////////////////////////////////////////
-	/// @class rodu4140::Kernel_Image_Operator
-	///
-	/// @brief An operator for an image, to be performed on all pixels in an
-	///        image
-	///
-	/// Detailed Description
-	/////////////////////////////////////////////////////////////////////////////
-	class Kernel_Image_Operator {
+  /////////////////////////////////////////////////////////////////////////////
+  /// @class rodu4140::Kernel_Image_Operator
+  ///
+  /// @brief An operator for an image, to be performed on all pixels in an
+  ///        image
+  ///
+  /// Detailed Description
+  /////////////////////////////////////////////////////////////////////////////
+  class Kernel_Image_Operator {
 
-		//-------------------------------------------------------------------------
-		// Public Member Types
-		//-------------------------------------------------------------------------
-	public:
+    //-------------------------------------------------------------------------
+    // Public Member Types
+    //-------------------------------------------------------------------------
+  public:
 
-		typedef Image::pixel_type             pixel_type;
-		typedef std::vector<std::vector<f32>> vector_2d_type;
+    typedef Image::pixel_type             pixel_type;
+    typedef std::vector<std::vector<f32>> vector_2d_type;
 
-		enum edge_handling{
-			edge_extend,  ///< The nearest border pixels are conceptually extended as
-			              ///< far as necessary to provide values for the convolution.
-			              ///< Corner pixels are extended in 90° wedges.
-			              ///< Other edge pixels are extended in lines.
+    enum edge_handling{
+      edge_extend,  ///< The nearest border pixels are conceptually extended as
+                    ///< far as necessary to provide values for the convolution.
+                    ///< Corner pixels are extended in 90ï¿½ wedges.
+                    ///< Other edge pixels are extended in lines.
 
-			edge_wrap,    ///< The image is conceptually wrapped (or tiled) and values
-			              ///< are taken from the opposite edge or corner
+      edge_wrap,    ///< The image is conceptually wrapped (or tiled) and values
+                    ///< are taken from the opposite edge or corner
 
-			edge_crop,    ///< Any pixel in the output image which would require values
-			              ///< from beyond the edge is skipped
+      edge_crop,    ///< Any pixel in the output image which would require values
+                    ///< from beyond the edge is skipped
 
-			edge_is_gray  ///< Outside the boundary is treated as gray
-		};
+      edge_is_gray  ///< Outside the boundary is treated as gray
+    };
 
-		//-------------------------------------------------------------------------
-		// Constructor / Destructor / Assignment
-		//-------------------------------------------------------------------------
-	public:
+    //-------------------------------------------------------------------------
+    // Constructor / Destructor / Assignment
+    //-------------------------------------------------------------------------
+  public:
 
-		///
-		/// @brief Constructs a Kernel Image Operator with the specified name
-		///
-		/// @param name   The name of this image process
-		/// @param kernel The kernel image
-		/// @param e      Method to handle edge-cases of the image
-		///
-		Kernel_Image_Operator( const vector_2d_type& kernel,
-													 edge_handling e = edge_extend );
+    ///
+    /// @brief Constructs a Kernel Image Operator with the specified name
+    ///
+    /// @param name   The name of this image process
+    /// @param kernel The kernel image
+    /// @param e      Method to handle edge-cases of the image
+    ///
+    Kernel_Image_Operator( const vector_2d_type& kernel,
+                           edge_handling e = edge_extend );
 
-		///
-		/// @brief Constructs an operator
-		///
-		Kernel_Image_Operator( f32** kernel, size_t width, size_t height, edge_handling e = edge_extend );
+    ///
+    /// @brief Constructs an operator
+    ///
+    Kernel_Image_Operator( f32** kernel, size_t width, size_t height, edge_handling e = edge_extend );
 
-		template<size_t N,size_t M>
-		Kernel_Image_Operator( const f32 (&kernel)[N][M], edge_handling e = edge_extend );
+    template<size_t N,size_t M>
+    Kernel_Image_Operator( const f32 (&kernel)[N][M], edge_handling e = edge_extend );
 
-		///
-		///
-		///
-		~Kernel_Image_Operator();
+    ///
+    ///
+    ///
+    ~Kernel_Image_Operator();
 
-		//-------------------------------------------------------------------------
-		// Image Operator API
-		//-------------------------------------------------------------------------
-	public:
+    //-------------------------------------------------------------------------
+    // Image Operator API
+    //-------------------------------------------------------------------------
+  public:
 
-		///
-		/// @brief Chain this operator with the specified operator
-		///
-		/// @param op the operator to perform after this operation
-		///
-		Kernel_Image_Operator& chain( const Kernel_Image_Operator& op );
+    ///
+    /// @brief Chain this operator with the specified operator
+    ///
+    /// @param op the operator to perform after this operation
+    ///
+    Kernel_Image_Operator& chain( const Kernel_Image_Operator& op );
 
-		///
-		/// @brief Perform the operation on the supplied image
-		///
-		///
-		///
-		Image operate( const Image& image ) const;
+    ///
+    /// @brief Perform the operation on the supplied image
+    ///
+    ///
+    ///
+    Image operate( const Image& image ) const;
 
-		///
-		/// @brief Perform the operation on the supplied image 'n' times
-		///
-		///
-		///
-		Image operate( const Image& image, size_t n ) const;
+    ///
+    /// @brief Perform the operation on the supplied image 'n' times
+    ///
+    ///
+    ///
+    Image operate( const Image& image, size_t n ) const;
 
-		//-------------------------------------------------------------------------
-		// Private Methods
-		//-------------------------------------------------------------------------
-	private:
+    //-------------------------------------------------------------------------
+    // Private Methods
+    //-------------------------------------------------------------------------
+  private:
 
-		///
-		///
-		void do_operation( const Image& in_image, Image& out_image ) const;
+    ///
+    ///
+    void do_operation( const Image& in_image, Image& out_image ) const;
 
-		//-------------------------------------------------------------------------
-		// Private Member Types
-		//-------------------------------------------------------------------------
-	private:
+    //-------------------------------------------------------------------------
+    // Private Member Types
+    //-------------------------------------------------------------------------
+  private:
 
-		typedef std::list<const Kernel_Image_Operator*> Operators;
+    typedef std::list<const Kernel_Image_Operator*> Operators;
 
-		//-------------------------------------------------------------------------
-		// Private Members
-		//-------------------------------------------------------------------------
-	private:
+    //-------------------------------------------------------------------------
+    // Private Members
+    //-------------------------------------------------------------------------
+  private:
 
-		f32**   m_kernel;          ///< The kernel (2D array)
-		size_t  m_width;           ///< The width of the kernel
-		size_t  m_height;          ///< The height of the kernel
-		f32     m_abs_sum;         ///< The absolute sum of all kernel values
-		edge_handling m_edge_case; ///< How to handle pixels on the edge
+    f32**   m_kernel;          ///< The kernel (2D array)
+    size_t  m_width;           ///< The width of the kernel
+    size_t  m_height;          ///< The height of the kernel
+    f32     m_abs_sum;         ///< The absolute sum of all kernel values
+    edge_handling m_edge_case; ///< How to handle pixels on the edge
 
-		Operators m_operators;     ///< List of remaining operators to perform
-	};
+    Operators m_operators;     ///< List of remaining operators to perform
+  };
 
-	//---------------------------------------------------------------------------
-	// Inline Definitions
-	//---------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
+  // Inline Definitions
+  //---------------------------------------------------------------------------
 
-	template<size_t N, size_t M>
-	Kernel_Image_Operator::Kernel_Image_Operator( const f32 (&kernel)[N][M], edge_handling e )
-		:	m_width(M),
-			m_height(N),
-			m_abs_sum(0), // set accumulator to 0
-			m_edge_case(e)
-	{
-		// Allocate memory for operator
-		m_kernel = new f32*[m_height];
-		for( size_t i = 0; i < m_height; ++i ){
-			m_kernel[i] = new f32[m_width];
-		}
+  template<size_t N, size_t M>
+  Kernel_Image_Operator::Kernel_Image_Operator( const f32 (&kernel)[N][M], edge_handling e )
+    :  m_width(M),
+      m_height(N),
+      m_abs_sum(0), // set accumulator to 0
+      m_edge_case(e)
+  {
+    // Allocate memory for operator
+    m_kernel = new f32*[m_height];
+    for( size_t i = 0; i < m_height; ++i ){
+      m_kernel[i] = new f32[m_width];
+    }
 
-		// Copy all elements from the 2D array
-		for( size_t i = 0; i < m_height; ++i ){
-			for( size_t j = 0; j < m_width; ++j ){
-				m_kernel[i][j] = kernel[i][j];
-				m_abs_sum += kernel[i][j];
-			}
-		}
+    // Copy all elements from the 2D array
+    for( size_t i = 0; i < m_height; ++i ){
+      for( size_t j = 0; j < m_width; ++j ){
+        m_kernel[i][j] = kernel[i][j];
+        m_abs_sum += kernel[i][j];
+      }
+    }
 
-		// If the sum is less than zero, take the absolute value
-		if(m_abs_sum < 0){
-			m_abs_sum = -m_abs_sum;
-		}
-	}
+    // If the sum is less than zero, take the absolute value
+    if(m_abs_sum < 0){
+      m_abs_sum = -m_abs_sum;
+    }
+  }
 
 } // namespace rodu4140
 

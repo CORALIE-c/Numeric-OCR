@@ -28,54 +28,54 @@
 
 namespace rodu4140 {
 
-	class Feature_Database{
+  class Feature_Database{
 
-		//------------------------------------------------------------------------
-		// Public Types
-		//------------------------------------------------------------------------
-	public:
+    //------------------------------------------------------------------------
+    // Public Types
+    //------------------------------------------------------------------------
+  public:
 
-		typedef std::pair<Image, feature_collection> cluster;
-		typedef std::vector<cluster>                 cluster_collection;
+    typedef std::pair<Image, feature_collection> cluster;
+    typedef std::vector<cluster>                 cluster_collection;
 
-		//------------------------------------------------------------------------
-		// Constructor / Destructor
-		//------------------------------------------------------------------------
-	public:
+    //------------------------------------------------------------------------
+    // Constructor / Destructor
+    //------------------------------------------------------------------------
+  public:
 
-		Feature_Database( );
+    Feature_Database( );
 
-		//------------------------------------------------------------------------
-		// Capacity
-		//------------------------------------------------------------------------
-	public:
+    //------------------------------------------------------------------------
+    // Capacity
+    //------------------------------------------------------------------------
+  public:
 
-		size_t size() const;
+    size_t size() const;
 
-		//------------------------------------------------------------------------
-		// Access
-		//------------------------------------------------------------------------
-	public:
+    //------------------------------------------------------------------------
+    // Access
+    //------------------------------------------------------------------------
+  public:
 
-		Feature_Database& insert( const Image& data, feature_collection& vector );
+    Feature_Database& insert( const Image& data, feature_collection& vector );
 
-		///
-		///
-		///
-		void analyze( Image& image, boundary_collection& bounds, feature_collection& features );
+    ///
+    ///
+    ///
+    void analyze( Image& image, boundary_collection& bounds, feature_collection& features );
 
-		//-----------------------------------------------------------------------------
-		// Private Members
-		//-----------------------------------------------------------------------------
-	private:
+    //-----------------------------------------------------------------------------
+    // Private Members
+    //-----------------------------------------------------------------------------
+  private:
 
-		cluster_collection m_clusters;
+    cluster_collection m_clusters;
 
-	};
+  };
 
-	inline size_t Feature_Database::size() const{
-		return m_clusters.size();
-	}
+  inline size_t Feature_Database::size() const{
+    return m_clusters.size();
+  }
 
 }  // namespace rodu4140
 

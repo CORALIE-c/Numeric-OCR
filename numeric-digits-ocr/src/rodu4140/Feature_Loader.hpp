@@ -28,24 +28,24 @@
 
 namespace rodu4140 {
 
-	struct boundary{
-		int top, left, bottom, right;
-	};
+  struct boundary{
+    int top, left, bottom, right;
+  };
 
-	typedef std::vector<Feature_Vector> feature_collection;
-	typedef std::vector<boundary>       boundary_collection;
+  typedef std::vector<Feature_Vector> feature_collection;
+  typedef std::vector<boundary>       boundary_collection;
 
-	std::ostream& operator << (std::ostream& o, const boundary& b );
+  std::ostream& operator << (std::ostream& o, const boundary& b );
 
-	///
-	///
-	///
-	///
-	void load_features( const Image& image,
-		                  feature_collection&  features,
-		                  boundary_collection& bounds,
-		                  size_t horizontal_divs = 10,
-		                  size_t vertical_divs   = 10 );
+  ///
+  ///
+  ///
+  ///
+  void load_features( const Image& image,
+                      feature_collection&  features,
+                      boundary_collection& bounds,
+                      size_t horizontal_divs = 10,
+                      size_t vertical_divs   = 10 );
 
 }  // namespace rodu4140
 

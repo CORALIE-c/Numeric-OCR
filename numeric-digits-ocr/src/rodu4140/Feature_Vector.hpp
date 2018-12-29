@@ -27,122 +27,122 @@
 
 namespace rodu4140 {
 
-	class Feature_Vector{
+  class Feature_Vector{
 
-		//-----------------------------------------------------------------------
-		// Public Member Types
-		//-----------------------------------------------------------------------
-	public:
+    //-----------------------------------------------------------------------
+    // Public Member Types
+    //-----------------------------------------------------------------------
+  public:
 
-		typedef std::vector<double> feature_collection;
+    typedef std::vector<double> feature_collection;
 
-		typedef typename std::vector<double>::iterator       iterator;
-		typedef typename std::vector<double>::const_iterator const_iterator;
+    typedef typename std::vector<double>::iterator       iterator;
+    typedef typename std::vector<double>::const_iterator const_iterator;
 
-		//-----------------------------------------------------------------------
-		// Constructor
-		//-----------------------------------------------------------------------
-	public:
+    //-----------------------------------------------------------------------
+    // Constructor
+    //-----------------------------------------------------------------------
+  public:
 
-		Feature_Vector( feature_collection& features );
+    Feature_Vector( feature_collection& features );
 
-		//-----------------------------------------------------------------------
-		// Capacity
-		//-----------------------------------------------------------------------
-	public:
+    //-----------------------------------------------------------------------
+    // Capacity
+    //-----------------------------------------------------------------------
+  public:
 
-		size_t size() const;
-		double magnitude() const;
+    size_t size() const;
+    double magnitude() const;
 
-		//-----------------------------------------------------------------------
-		// Access
-		//-----------------------------------------------------------------------
-	public:
+    //-----------------------------------------------------------------------
+    // Access
+    //-----------------------------------------------------------------------
+  public:
 
-		double& at(size_t i);
-		double at(size_t i) const;
-		double& operator[](size_t i);
-		double operator[](size_t i) const;
+    double& at(size_t i);
+    double at(size_t i) const;
+    double& operator[](size_t i);
+    double operator[](size_t i) const;
 
-		//-----------------------------------------------------------------------
-		// Operators
-		//-----------------------------------------------------------------------
-	public:
+    //-----------------------------------------------------------------------
+    // Operators
+    //-----------------------------------------------------------------------
+  public:
 
-		Feature_Vector& operator -= ( const Feature_Vector& rhs );
+    Feature_Vector& operator -= ( const Feature_Vector& rhs );
 
-		//-----------------------------------------------------------------------
-		// Iterators
-		//-----------------------------------------------------------------------
-	public:
+    //-----------------------------------------------------------------------
+    // Iterators
+    //-----------------------------------------------------------------------
+  public:
 
-		iterator begin();
-		iterator end();
+    iterator begin();
+    iterator end();
 
-		const_iterator begin() const;
-		const_iterator end() const;
+    const_iterator begin() const;
+    const_iterator end() const;
 
-		const_iterator cbegin() const;
-		const_iterator cend() const;
+    const_iterator cbegin() const;
+    const_iterator cend() const;
 
-		//-----------------------------------------------------------------------
-		// Private Members
-		//-----------------------------------------------------------------------
-	private:
+    //-----------------------------------------------------------------------
+    // Private Members
+    //-----------------------------------------------------------------------
+  private:
 
-		feature_collection m_features; ///< Collection of features
+    feature_collection m_features; ///< Collection of features
 
-	};
+  };
 
-	std::ostream& operator << ( std::ostream& o, const Feature_Vector& rhs );
+  std::ostream& operator << ( std::ostream& o, const Feature_Vector& rhs );
 
-	//--------------------------------------------------------------------------
-	// Access
-	//--------------------------------------------------------------------------
+  //--------------------------------------------------------------------------
+  // Access
+  //--------------------------------------------------------------------------
 
-	inline double& Feature_Vector::operator[](size_t i){
-		return at(i);
-	}
+  inline double& Feature_Vector::operator[](size_t i){
+    return at(i);
+  }
 
-	inline double Feature_Vector::operator[](size_t i) const{
-		return at(i);
-	}
+  inline double Feature_Vector::operator[](size_t i) const{
+    return at(i);
+  }
 
-	//--------------------------------------------------------------------------
-	// Operators
-	//--------------------------------------------------------------------------
+  //--------------------------------------------------------------------------
+  // Operators
+  //--------------------------------------------------------------------------
 
-	inline Feature_Vector operator - ( const Feature_Vector& lhs, const Feature_Vector& rhs ){
-		return Feature_Vector(lhs) -= rhs;
-	}
+  inline Feature_Vector operator - ( const Feature_Vector& lhs, const Feature_Vector& rhs ){
+    return Feature_Vector(lhs) -= rhs;
+  }
 
-	//--------------------------------------------------------------------------
-	// Comparisons
-	//--------------------------------------------------------------------------
+  //--------------------------------------------------------------------------
+  // Comparisons
+  //--------------------------------------------------------------------------
 
-	inline bool operator ==( const Feature_Vector& lhs, const Feature_Vector& rhs ){
-		return lhs.magnitude() == rhs.magnitude();
-	}
+  inline bool operator ==( const Feature_Vector& lhs, const Feature_Vector& rhs ){
+    return lhs.magnitude() == rhs.magnitude();
+  }
 
-	inline bool operator !=( const Feature_Vector& lhs, const Feature_Vector& rhs ){
-		return !(lhs == rhs);
-	}
+  inline bool operator !=( const Feature_Vector& lhs, const Feature_Vector& rhs ){
+    return !(lhs == rhs);
+  }
 
-	inline bool operator < ( const Feature_Vector& lhs, const Feature_Vector& rhs ){
-		return lhs.magnitude() < rhs.magnitude();
-	}
+  inline bool operator < ( const Feature_Vector& lhs, const Feature_Vector& rhs ){
+    return lhs.magnitude() < rhs.magnitude();
+  }
 
-	inline bool operator > ( const Feature_Vector& lhs, const Feature_Vector& rhs ){
-		return rhs < lhs;
-	}
+  inline bool operator > ( const Feature_Vector& lhs, const Feature_Vector& rhs ){
+    return rhs < lhs;
+  }
 
-	inline bool operator <=( const Feature_Vector& lhs, const Feature_Vector& rhs ){
-		return !(rhs < lhs);
-	}
+  inline bool operator <=( const Feature_Vector& lhs, const Feature_Vector& rhs ){
+    return !(rhs < lhs);
+  }
 
-	inline bool operator >=( const Feature_Vector& lhs, const Feature_Vector& rhs ){
-		return !(lhs < rhs);
-	}
+  inline bool operator >=( const Feature_Vector& lhs, const Feature_Vector& rhs ){
+    return !(lhs < rhs);
+  }
 
 }  // namespace rodu4140
 

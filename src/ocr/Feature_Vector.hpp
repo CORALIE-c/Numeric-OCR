@@ -29,7 +29,7 @@
 
 namespace ocr {
 
-  class Feature_Vector {
+  class Feature_Vector  {
 
     //-----------------------------------------------------------------------
     // Public Member Types

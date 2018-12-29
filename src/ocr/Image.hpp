@@ -34,7 +34,7 @@ namespace ocr {
   /// @brief This object is an abstract representation of an image
   ///
   /////////////////////////////////////////////////////////////////////////////
-  class Image {
+  class Image  {
 
     //-------------------------------------------------------------------------
     // Public Member Types

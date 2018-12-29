@@ -26,7 +26,7 @@
 #include <list>
 #include <vector>
 
-namespace ocr{
+namespace ocr {
 
   /////////////////////////////////////////////////////////////////////////////
   /// @class ocr::Kernel_Image_Operator
@@ -36,7 +36,7 @@ namespace ocr{
   ///
   /// Detailed Description
   /////////////////////////////////////////////////////////////////////////////
-  class Kernel_Image_Operator {
+  class Kernel_Image_Operator  {
 
     //-------------------------------------------------------------------------
     // Public Member Types

@@ -29,9 +29,10 @@
 #include <vector>  // std::vector
 #include <cstddef> // std::size_t
 
+
 namespace ocr {
 
-  class Feature_Database {
+  class Feature_Database  {
 
     //------------------------------------------------------------------------
     // Public Types

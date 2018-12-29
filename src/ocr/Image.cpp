@@ -18,7 +18,7 @@
 
 #include <algorithm> // std::copy
 
-namespace ocr{
+namespace ocr {
 
   //---------------------------------------------------------------------------
   // Constructor / Destructor

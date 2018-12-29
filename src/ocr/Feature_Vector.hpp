@@ -22,12 +22,14 @@
 #endif
 
 #include "base_types.hpp"
-#include <vector>
-#include <ostream>
+
+#include <vector>  // std::vector
+#include <iosfwd>  // std::ostream decl
+#include <cstddef> // std::size_t
 
 namespace ocr {
 
-  class Feature_Vector{
+  class Feature_Vector {
 
     //-----------------------------------------------------------------------
     // Public Member Types
@@ -51,7 +53,7 @@ namespace ocr {
     //-----------------------------------------------------------------------
   public:
 
-    size_t size() const;
+    std::size_t size() const;
     double magnitude() const;
 
     //-----------------------------------------------------------------------
@@ -59,10 +61,10 @@ namespace ocr {
     //-----------------------------------------------------------------------
   public:
 
-    double& at(size_t i);
-    double at(size_t i) const;
-    double& operator[](size_t i);
-    double operator[](size_t i) const;
+    double& at(std::size_t i);
+    double at(std::size_t i) const;
+    double& operator[](std::size_t i);
+    double operator[](std::size_t i) const;
 
     //-----------------------------------------------------------------------
     // Operators
@@ -100,11 +102,11 @@ namespace ocr {
   // Access
   //--------------------------------------------------------------------------
 
-  inline double& Feature_Vector::operator[](size_t i){
+  inline double& Feature_Vector::operator[](std::size_t i){
     return at(i);
   }
 
-  inline double Feature_Vector::operator[](size_t i) const{
+  inline double Feature_Vector::operator[](std::size_t i) const{
     return at(i);
   }
 

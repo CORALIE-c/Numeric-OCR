@@ -16,7 +16,9 @@
  */
 
 #include "Feature_Loader.hpp"
-#include <iostream>
+
+#include <ostream> // std::ostream
+#include <cmath>   // std::floor
 
 namespace ocr {
 
@@ -34,9 +36,9 @@ namespace ocr {
   //--------------------------------------------------------------------------
 
   template<typename T>
-  inline T** new_2d( size_t rows, size_t cols ){
+  inline T** new_2d( std::size_t rows, std::size_t cols ){
     T** result = new T*[rows];
-    for( size_t i = 0; i < rows; ++i ){
+    for( std::size_t i = 0; i < rows; ++i ){
       result[i] = new T[cols];
     }
     return result;
@@ -45,8 +47,8 @@ namespace ocr {
   //--------------------------------------------------------------------------
 
   template<typename T>
-  inline void delete_2d( T** ptr, size_t rows ){
-    for( size_t i = 0; i < rows; ++i ){
+  inline void delete_2d( T** ptr, std::size_t rows ){
+    for( std::size_t i = 0; i < rows; ++i ){
       delete[] ptr[i];
     }
     delete [] ptr;
@@ -61,7 +63,7 @@ namespace ocr {
     if( row < 0 || col < 0){
       return;
     }
-    if( ((size_t) col) >= image.width() || ((size_t) row) >= image.height()){
+    if( ((std::size_t) col) >= image.width() || ((std::size_t) row) >= image.height()){
       return;
     }
 
@@ -121,8 +123,8 @@ namespace ocr {
 
   //--------------------------------------------------------------------------
 
-  size_t count_labeled( int label, int** label_map, int start_row, int start_col, int end_row, int end_col ){
-    size_t count = 0;
+  std::size_t count_labeled( int label, int** label_map, int start_row, int start_col, int end_row, int end_col ){
+    std::size_t count = 0;
     for( int i = start_row; i <= end_row; ++i ){
       for( int j = start_col; j <= end_col; ++j ){
         if( label_map[i][j] == label ){
@@ -138,14 +140,14 @@ namespace ocr {
   void load_features( const Image& image,
                       feature_collection&  features,
                       boundary_collection& bounds,
-                      size_t horizontal_divs,
-                      size_t vertical_divs ){
+                      std::size_t horizontal_divs,
+                      std::size_t vertical_divs ){
 
     int** label_map = new_2d<int>( image.height(), image.width() );
 
     // Set the 2D array to 0
-    for( size_t row = 0; row < image.height(); ++row ){
-      for( size_t col = 0; col < image.width(); ++col ){
+    for( std::size_t row = 0; row < image.height(); ++row ){
+      for( std::size_t col = 0; col < image.width(); ++col ){
         label_map[row][col] = 0;
       }
     }
@@ -153,8 +155,8 @@ namespace ocr {
     int label = 1;
 
     // Iterate through all pixels, expanding any discovered regions
-    for( size_t row = 0; row < image.height(); ++row ){
-      for( size_t col = 0; col < image.width(); ++col ){
+    for( std::size_t row = 0; row < image.height(); ++row ){
+      for( std::size_t col = 0; col < image.width(); ++col ){
 
         ubyte pix = image.at_binary(col,row); // x y
 
@@ -174,11 +176,11 @@ namespace ocr {
 
       Feature_Vector::feature_collection feat;
 
-      const size_t width  = iter->right  - iter->left + 1;
-      const size_t height = iter->bottom - iter->top  + 1;
+      const std::size_t width  = iter->right  - iter->left + 1;
+      const std::size_t height = iter->bottom - iter->top  + 1;
 
-      size_t black  = 0;
-      size_t total  = 0;
+      std::size_t black  = 0;
+      std::size_t total  = 0;
 
       black = count_labeled( current_label, label_map, iter->top, iter->left, iter->bottom, iter->right );
       total = width*height;
@@ -196,8 +198,8 @@ namespace ocr {
       int y_step = new_height / vertical_divs;
       int x_step = new_width  / horizontal_divs;
 
-      for( size_t y = 0; y < vertical_divs; ++y ){
-        for( size_t x = 0; x < horizontal_divs; ++x ){
+      for( std::size_t y = 0; y < vertical_divs; ++y ){
+        for( std::size_t x = 0; x < horizontal_divs; ++x ){
           int row_start = std::max(iter->top  + (int)(std::floor(y     * y_step * y_ratio))    , iter->top );
           int row_end   = std::max(iter->top  + (int)(std::floor((y+1) * y_step * y_ratio)) - 1, row_start );
           int col_start = std::max(iter->left + (int)(std::floor(x     * x_step * x_ratio))    , iter->left);
@@ -218,7 +220,7 @@ namespace ocr {
 
       // Scale the image up to an increment of DIVS to calculate the amount
 
-      for( size_t i = 0; i < vertical_divs; ++i ){
+      for( std::size_t i = 0; i < vertical_divs; ++i ){
         int row_start = std::max(iter->top + (int)(std::floor(i     * y_step * y_ratio))    , iter->top );
         int row_end   = std::max(iter->top + (int)(std::floor((i+1) * y_step * y_ratio)) - 1, row_start );
 
@@ -233,7 +235,7 @@ namespace ocr {
       // Vertical Histogram
       //----------------------------------------------------------------------
 
-      for( size_t i = 0; i < horizontal_divs; ++i ){
+      for( std::size_t i = 0; i < horizontal_divs; ++i ){
         int col_start = std::max(iter->left + (int)(std::floor(i     * x_step * x_ratio))    , iter->left);
         int col_end   = std::max(iter->left + (int)(std::floor((i+1) * x_step * x_ratio)) - 1, col_start );
 

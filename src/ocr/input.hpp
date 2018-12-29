@@ -25,8 +25,9 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
-#include <stdlib.h>
-namespace ocr{
+#include <cstdlib>
+
+namespace ocr {
 
   ///
   /// @brief Clear the system screen

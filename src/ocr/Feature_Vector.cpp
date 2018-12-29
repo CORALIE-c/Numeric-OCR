@@ -16,6 +16,8 @@
  */
 #include "Feature_Vector.hpp"
 
+#include <ostream> // std::ostream
+
 namespace ocr {
 
   //--------------------------------------------------------------------------
@@ -32,7 +34,7 @@ namespace ocr {
   // Capacity
   //--------------------------------------------------------------------------
 
-  size_t Feature_Vector::size() const{
+  std::size_t Feature_Vector::size() const{
     return m_features.size();
   }
 
@@ -50,11 +52,11 @@ namespace ocr {
   // Access
   //--------------------------------------------------------------------------
 
-  double& Feature_Vector::at(size_t i){
+  double& Feature_Vector::at(std::size_t i){
     return m_features[i];
   }
 
-  double Feature_Vector::at(size_t i) const{
+  double Feature_Vector::at(std::size_t i) const{
     return m_features[i];
   }
 

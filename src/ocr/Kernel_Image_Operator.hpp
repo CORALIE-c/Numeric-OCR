@@ -22,6 +22,7 @@
 #endif
 
 #include "Image.hpp"
+
 #include <list>
 #include <vector>
 
@@ -78,7 +79,7 @@ namespace ocr{
     ///
     /// @brief Constructs an operator
     ///
-    Kernel_Image_Operator( f32** kernel, size_t width, size_t height, edge_handling e = edge_extend );
+    Kernel_Image_Operator( f32** kernel, std::size_t width, std::size_t height, edge_handling e = edge_extend );
 
     template<size_t N,size_t M>
     Kernel_Image_Operator( const f32 (&kernel)[N][M], edge_handling e = edge_extend );
@@ -112,7 +113,7 @@ namespace ocr{
     ///
     ///
     ///
-    Image operate( const Image& image, size_t n ) const;
+    Image operate( const Image& image, std::size_t n ) const;
 
     //-------------------------------------------------------------------------
     // Private Methods
@@ -136,8 +137,8 @@ namespace ocr{
   private:
 
     f32**   m_kernel;          ///< The kernel (2D array)
-    size_t  m_width;           ///< The width of the kernel
-    size_t  m_height;          ///< The height of the kernel
+    std::size_t  m_width;           ///< The width of the kernel
+    std::size_t  m_height;          ///< The height of the kernel
     f32     m_abs_sum;         ///< The absolute sum of all kernel values
     edge_handling m_edge_case; ///< How to handle pixels on the edge
 
@@ -148,7 +149,7 @@ namespace ocr{
   // Inline Definitions
   //---------------------------------------------------------------------------
 
-  template<size_t N, size_t M>
+  template<size_t N, std::size_t M>
   Kernel_Image_Operator::Kernel_Image_Operator( const f32 (&kernel)[N][M], edge_handling e )
     :  m_width(M),
       m_height(N),
@@ -157,13 +158,13 @@ namespace ocr{
   {
     // Allocate memory for operator
     m_kernel = new f32*[m_height];
-    for( size_t i = 0; i < m_height; ++i ){
+    for( std::size_t i = 0; i < m_height; ++i ){
       m_kernel[i] = new f32[m_width];
     }
 
     // Copy all elements from the 2D array
-    for( size_t i = 0; i < m_height; ++i ){
-      for( size_t j = 0; j < m_width; ++j ){
+    for( std::size_t i = 0; i < m_height; ++i ){
+      for( std::size_t j = 0; j < m_width; ++j ){
         m_kernel[i][j] = kernel[i][j];
         m_abs_sum += kernel[i][j];
       }

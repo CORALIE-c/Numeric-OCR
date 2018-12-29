@@ -16,8 +16,7 @@
  */
 #include "Image.hpp"
 
-#include <cstring>
-#include <utility>
+#include <algorithm> // std::copy
 
 namespace ocr{
 
@@ -26,7 +25,7 @@ namespace ocr{
   //---------------------------------------------------------------------------
 
   Image::Image( size_type width, size_type height )
-    :  m_width(width),
+    : m_width(width),
       m_height(height),
       m_data( new pixel_type[width * height] )
   {
@@ -52,11 +51,13 @@ namespace ocr{
 #ifdef OCR_COMPILER_HAS_CPP11_RVALUE
 
   Image::Image( Image&& x )
-    :  m_width(std::move(x.m_width)),
-      m_height(std::move(x.m_height)),
-      m_data(std::move(x.m_data))
+    : m_width(x.m_width),
+      m_height(x.m_height),
+      m_data(x.m_data)
   {
-
+    x.m_width = 0;
+    x.m_height = 0;
+    x.m_data = nullptr;
   }
 
 #endif
@@ -108,14 +109,14 @@ namespace ocr{
     pixel_start->b = value.b;
   }
 
-  void Image::set_grayscale( size_t x, size_t y, ubyte value ){
+  void Image::set_grayscale( std::size_t x, std::size_t y, ubyte value ){
     pixel_type* pixel_start = m_data + ((y * m_width) + x);
     pixel_start->r =
     pixel_start->g =
     pixel_start->b = value;
   }
 
-  void Image::set_binary( size_t x, size_t y, ubyte value ){
+  void Image::set_binary( std::size_t x, std::size_t y, ubyte value ){
     pixel_type* pixel_start = m_data + ((y * m_width) + x);
     pixel_start->r =
     pixel_start->g =

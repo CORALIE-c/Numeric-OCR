@@ -15,11 +15,11 @@
  * - Feature_Database.cpp created
  */
 #include "Feature_Database.hpp"
-#include <iostream>
-#include <limits>
-#include <map>
 
-namespace ocr{
+#include <cmath> // std::floor
+#include <list>  // std::list
+
+namespace ocr {
 
   Feature_Database::Feature_Database(){}
 
@@ -42,7 +42,7 @@ namespace ocr{
     // Find most likely comparison
     //------------------------------------------------------------------------
 
-    const size_t COMPARISONS = 5;
+    const std::size_t COMPARISONS = 5;
     typedef std::pair<size_t,double> min_entry;
     typedef std::list<min_entry>     min_list;
 
@@ -53,7 +53,7 @@ namespace ocr{
 
       min_list minimums;
 
-      for( size_t i =0; i < m_clusters.size() ; ++i ){
+      for( std::size_t i =0; i < m_clusters.size() ; ++i ){
 
         cluster& clust = m_clusters[i];
 
@@ -87,7 +87,7 @@ namespace ocr{
 
       std::vector<size_t> most_common;
       // Initialize vector as 0
-      for( size_t i = 0; i < m_clusters.size(); ++i ){
+      for( std::size_t i = 0; i < m_clusters.size(); ++i ){
         most_common.push_back(0);
       }
       // count most common
@@ -96,10 +96,10 @@ namespace ocr{
       }
 
       // Find the index of the most likely cluster
-      size_t minimal_entry_index      = 0;
-      size_t minimal_entry_occurrence = 0;
+      std::size_t minimal_entry_index      = 0;
+      std::size_t minimal_entry_occurrence = 0;
 
-      for( size_t i = 0; i < most_common.size(); ++i ){
+      for( std::size_t i = 0; i < most_common.size(); ++i ){
         if( most_common[i] > minimal_entry_occurrence ){
           minimal_entry_index = i;
           minimal_entry_occurrence = most_common[i];
@@ -114,16 +114,16 @@ namespace ocr{
 
       // Data for stretching the output glyph
       Image& glyph             = min_cluster->first;
-      const size_t from_height = glyph.height();
-      const size_t from_width  = glyph.width();
-      const size_t to_height   = bounds_iter->bottom - bounds_iter->top + 1;
-      const size_t to_width    = bounds_iter->right  - bounds_iter->left + 1;
+      const std::size_t from_height = glyph.height();
+      const std::size_t from_width  = glyph.width();
+      const std::size_t to_height   = bounds_iter->bottom - bounds_iter->top + 1;
+      const std::size_t to_width    = bounds_iter->right  - bounds_iter->left + 1;
 
       double x_ratio = from_width  / (double) to_width;
       double y_ratio = from_height / (double) to_height;
 
-      for( size_t y = 0; y < to_height; ++y ){
-        for( size_t x = 0; x < to_width; ++x ){
+      for( std::size_t y = 0; y < to_height; ++y ){
+        for( std::size_t x = 0; x < to_width; ++x ){
           // Calculate the stretched x/y coordinates
           int x_in = (int) std::floor( x_ratio * x );
           int y_in = (int) std::floor( y_ratio * y );

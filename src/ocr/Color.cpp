@@ -16,6 +16,8 @@
  */
 #include "Color.hpp"
 
+#include <ostream> // std::ostream
+
 namespace ocr {
 
   //-------------------------------------------------------------------------

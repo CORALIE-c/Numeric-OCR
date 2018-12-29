@@ -29,6 +29,15 @@
 
 #define OCR_VERSION VERSION(1,0,0)
 
+// Image Processing Libraries
+#include "ocr/base_types.hpp"
+#include "ocr/BMP_Loader.hpp"
+#include "ocr/Image.hpp"
+#include "ocr/Kernel_Image_Operator.hpp"
+#include "ocr/input.hpp"
+#include "ocr/Feature_Loader.hpp"
+#include "ocr/Feature_Database.hpp"
+
 // RapidJSON for loading/storing JSON elements
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/document.h>
@@ -55,14 +64,6 @@
 #  define M_PI 3.14159265359
 #endif
 
-// Image Processing Libraries
-#include "ocr/base_types.hpp"
-#include "ocr/BMP_Loader.hpp"
-#include "ocr/Image.hpp"
-#include "ocr/Kernel_Image_Operator.hpp"
-#include "ocr/input.hpp"
-#include "ocr/Feature_Loader.hpp"
-#include "ocr/Feature_Database.hpp"
 //----------------------------------------------------------------------------
 // Types
 //----------------------------------------------------------------------------
@@ -233,8 +234,8 @@ namespace ocr{
     bool prime_pass = false;
     do{
       deletion_made = false;
-      for( size_t x = 0; x < active_buffer.width(); ++x ){
-        for( size_t y = 0; y < active_buffer.height(); ++y ){
+      for( std::size_t x = 0; x < active_buffer.width(); ++x ){
+        for( std::size_t y = 0; y < active_buffer.height(); ++y ){
 
           // Only interested if the pixel is already set
           if( active_buffer.at_binary(x,y) ){
@@ -378,7 +379,7 @@ namespace ocr{
       }
     }
 
-    for( size_t i=1; i < kern.size(); ++i ){
+    for( std::size_t i=1; i < kern.size(); ++i ){
       if(kern[i-1].size() != kern[i].size()){
         std::cout << "   [ ] unable to load filter '" << name << "'.\n";
         std::cout << "       ...kernel matrix is not consistent.\n";
@@ -406,7 +407,7 @@ namespace ocr{
 
     // Get the size of the file
     file.seekg( 0, file.end );
-    size_t length = file.tellg();
+    std::size_t length = file.tellg();
     file.seekg( 0, file.beg );
 
     char* file_buffer = new char[length+1];
@@ -648,10 +649,10 @@ void generate_gaussian_filter(){
   kernel_attribute.SetArray();
 
 
-  for( size_t i = 0; i < kernel.size(); ++i ){
+  for( std::size_t i = 0; i < kernel.size(); ++i ){
     rapidjson::Value array;
     array.SetArray();
-    for( size_t j = 0; j < kernel.size(); ++j ){
+    for( std::size_t j = 0; j < kernel.size(); ++j ){
       array.PushBack( kernel[i][j], doc.GetAllocator() );
     }
     kernel_attribute.PushBack( array, doc.GetAllocator() );
@@ -792,8 +793,8 @@ void generate_feature_database(){
        << all_vectors[0].size()   << " "
        << all_vectors.size()      << "\n";
 
-  for( size_t y = 0; y < glyph_image->height(); ++y ){
-    for( size_t x = 0; x < glyph_image->width(); ++x ){
+  for( std::size_t y = 0; y < glyph_image->height(); ++y ){
+    for( std::size_t x = 0; x < glyph_image->width(); ++x ){
       file << (int) glyph_image->at_binary(x,y);
     }
     file << "\n";
@@ -822,7 +823,7 @@ void load_feature_database_from_file( const char* filename ){
     return;
   }
 
-  size_t width, height, vector_length, no_of_vectors;
+  std::size_t width, height, vector_length, no_of_vectors;
 
   file >> width;
   file >> height;
@@ -838,16 +839,16 @@ void load_feature_database_from_file( const char* filename ){
 
   char* line = new char[width+1];
 
-  for( size_t y = 0; y < height; ++y ){
+  for( std::size_t y = 0; y < height; ++y ){
     file.getline( line, width + 1 );
-    if( (size_t) file.gcount() != width + 1 ){
+    if( (std::size_t) file.gcount() != width + 1 ){
       std::cout << " o Invalid Glyph (inconsistent width). Unable to read database.\n";
       return;
     }
 
     // Generate the image row
 
-    for( size_t x = 0; x < width; ++x ){
+    for( std::size_t x = 0; x < width; ++x ){
       image.set_binary( x, y, line[x] == '1' );
     }
   }
@@ -861,9 +862,9 @@ void load_feature_database_from_file( const char* filename ){
   ocr::feature_collection features;
 
   std::cout << " o " << no_of_vectors << " features loaded\n";
-  for( size_t i = 0; i < no_of_vectors; ++i ){
+  for( std::size_t i = 0; i < no_of_vectors; ++i ){
     ocr::Feature_Vector::feature_collection feat_values;
-    for( size_t j = 0; j < vector_length; ++j ){
+    for( std::size_t j = 0; j < vector_length; ++j ){
       double value;
       file >> value;
       feat_values.push_back(value);
@@ -1054,8 +1055,8 @@ void convert_grayscale_to_binary_static(){
     threshold = ocr::get_int_input("Threshold (0-255): ","Error, invalid input");
   }
 
-  for( size_t i = 0; i < image->width(); ++i ){
-    for( size_t j = 0; j < image->height(); ++j ){
+  for( std::size_t i = 0; i < image->width(); ++i ){
+    for( std::size_t j = 0; j < image->height(); ++j ){
       ocr::Image::pixel_type out_pixel;
       ocr::Image::pixel_type pixel = image->at(i,j);
       ocr::ubyte out = ((((pixel.r + pixel.g + pixel.b) / 3) > threshold) ? 255 : 0);
@@ -1108,7 +1109,7 @@ void convert_grayscale_to_binary_adaptive(){
   ocr::Image out_image( image->width(), image->height() );
 
   // Perform the calculation
-  for( size_t x_seg = 0; x_seg < image->width(); ++x_seg ){
+  for( std::size_t x_seg = 0; x_seg < image->width(); ++x_seg ){
 
     if(x_seg + neighborhood >= image->width()){
       x_neighborhood = image->width() - x_seg;
@@ -1116,7 +1117,7 @@ void convert_grayscale_to_binary_adaptive(){
       x_neighborhood = neighborhood;
     }
 
-    for( size_t y_seg = 0; y_seg < image->height(); ++y_seg ){
+    for( std::size_t y_seg = 0; y_seg < image->height(); ++y_seg ){
 
       if(y_seg + neighborhood >= image->height()){
         y_neighborhood = image->height() - y_seg;
@@ -1126,8 +1127,8 @@ void convert_grayscale_to_binary_adaptive(){
 
       // Calculate the segment average
       ocr::u32 avg = 0;
-      for( size_t i = 0; i < x_neighborhood; ++i ){
-        for( size_t j = 0; j < y_neighborhood; ++j ){
+      for( std::size_t i = 0; i < x_neighborhood; ++i ){
+        for( std::size_t j = 0; j < y_neighborhood; ++j ){
           ocr::Image::pixel_type pixel = image->at( x_seg + i, y_seg + j );
 
           avg += pixel.r;
@@ -1136,8 +1137,8 @@ void convert_grayscale_to_binary_adaptive(){
       avg /= (x_neighborhood*y_neighborhood);
 
       // Calculate the thresholded image
-      for( size_t i = 0; i < x_neighborhood; ++i ){
-        for( size_t j = 0; j < y_neighborhood; ++j ){
+      for( std::size_t i = 0; i < x_neighborhood; ++i ){
+        for( std::size_t j = 0; j < y_neighborhood; ++j ){
           ocr::Image::pixel_type pixel = image->at( x_seg + i, y_seg + j );
           ocr::ubyte out = (( pixel.r >= avg ) ? 255 : 0);
 

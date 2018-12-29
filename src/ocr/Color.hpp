@@ -21,7 +21,8 @@
 #endif
 
 #include "base_types.hpp"
-#include <ostream>
+
+#include <iosfwd> // std::ostream fwd
 
 namespace ocr {
 
@@ -31,7 +32,7 @@ namespace ocr {
   /// @brief The color object
   ///
   /////////////////////////////////////////////////////////////////////////////
-  class Color_RGB{
+  class Color_RGB {
 
     //-------------------------------------------------------------------------
     // Public Static Constants

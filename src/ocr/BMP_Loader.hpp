@@ -21,10 +21,9 @@
 # pragma once
 #endif
 
-#include "base_types.hpp"
-#include "Image.hpp"
-
 namespace ocr {
+
+  class Image;
 
   typedef enum image_status_{
     IS_SUCCESS        = 0,

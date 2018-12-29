@@ -15,9 +15,12 @@
  * - BMP_Loader.cpp created
  */
 #include "BMP_Loader.hpp"
+#include "base_types.hpp"
+#include "Image.hpp"
+
 #include <cmath>
 #include <fstream>
-#include <iostream>
+#include <ostream>
 
 namespace ocr {
 
@@ -190,8 +193,8 @@ namespace ocr {
     if( (status = load_bmp_image_color( filename, image )) != IS_SUCCESS ){
       return status;
     }
-    for( size_t i = 0; i < (*image)->width(); ++i){
-      for( size_t j = 0; j < (*image)->height(); ++j ){
+    for( std::size_t i = 0; i < (*image)->width(); ++i){
+      for( std::size_t j = 0; j < (*image)->height(); ++j ){
         pixel_type old_pixel = (*image)->at(i,j);
         pixel_type new_pixel;
 
@@ -217,8 +220,8 @@ namespace ocr {
     if( (status = load_bmp_image_color( filename, image )) != IS_SUCCESS ){
       return status;
     }
-    for( size_t i = 0; i < (*image)->width(); ++i){
-      for( size_t j = 0; j < (*image)->height(); ++j ){
+    for( std::size_t i = 0; i < (*image)->width(); ++i){
+      for( std::size_t j = 0; j < (*image)->height(); ++j ){
         pixel_type old_pixel = (*image)->at(i,j);
         pixel_type new_pixel;
 

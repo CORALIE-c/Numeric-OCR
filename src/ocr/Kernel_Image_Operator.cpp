@@ -14,6 +14,7 @@
  * Sep 26, 2015: 
  * - Image_Operator.cpp created
  */
+
 #include "Kernel_Image_Operator.hpp"
 
 namespace ocr {
@@ -30,12 +31,12 @@ namespace ocr {
       m_edge_case(e)
   {
     m_kernel = new f32*[m_height];
-    for( size_t i = 0; i < m_height; ++i ){
+    for( std::size_t i = 0; i < m_height; ++i ){
       m_kernel[i] = new f32[m_width];
     }
 
-    for( size_t i = 0; i < m_width; ++i ){
-      for( size_t j = 0; j < m_height; ++j ){
+    for( std::size_t i = 0; i < m_width; ++i ){
+      for( std::size_t j = 0; j < m_height; ++j ){
         m_kernel[i][j] = kernel[i][j];
         m_abs_sum += m_kernel[i][j];
       }
@@ -47,7 +48,7 @@ namespace ocr {
     }
   }
 
-  Kernel_Image_Operator::Kernel_Image_Operator( f32** kernel, size_t width, size_t height, edge_handling e)
+  Kernel_Image_Operator::Kernel_Image_Operator( f32** kernel, std::size_t width, std::size_t height, edge_handling e)
     :  m_width(width),
       m_height(height),
       m_abs_sum(0), // set accumulator to 0
@@ -55,13 +56,13 @@ namespace ocr {
   {
     // Allocate memory for operator
     m_kernel = new f32*[m_height];
-    for( size_t i = 0; i < m_height; ++i ){
+    for( std::size_t i = 0; i < m_height; ++i ){
       m_kernel[i] = new f32[m_width];
     }
 
     // Copy all elements from the 2D array
-    for( size_t i = 0; i < m_height; ++i ){
-      for( size_t j = 0; j < m_width; ++j ){
+    for( std::size_t i = 0; i < m_height; ++i ){
+      for( std::size_t j = 0; j < m_width; ++j ){
         m_kernel[i][j] = kernel[i][j];
         m_abs_sum += m_kernel[i][j];
       }
@@ -76,7 +77,7 @@ namespace ocr {
   Kernel_Image_Operator::~Kernel_Image_Operator(){
 
     // Delete Memory for operator
-    for( size_t i = 0; i < m_height; ++i ){
+    for( std::size_t i = 0; i < m_height; ++i ){
       delete [] m_kernel[i];
     }
     delete [] m_kernel;
@@ -116,7 +117,7 @@ namespace ocr {
     return *active_buffer;
   }
 
-  Image Kernel_Image_Operator::operate( const Image& image, size_t n ) const{
+  Image Kernel_Image_Operator::operate( const Image& image, std::size_t n ) const{
 
     // Double buffered
     Image buffers[] = {
@@ -129,7 +130,7 @@ namespace ocr {
     //-------------------------------------------------------------------------
 
     // Do operation n times first
-    for( size_t i = 0; i < n; ++i ){
+    for( std::size_t i = 0; i < n; ++i ){
       this->do_operation( *active_buffer, *inactive_buffer );
       // swap the buffer pointers
       std::swap( active_buffer, inactive_buffer );
@@ -168,7 +169,7 @@ namespace ocr {
 
     // Allocate 2D array
     pixel_type** values = new pixel_type*[m_height];
-    for( size_t i = 0; i < m_height; ++i ){
+    for( std::size_t i = 0; i < m_height; ++i ){
       values[i] = new pixel_type[m_width];
     }
 
@@ -250,10 +251,10 @@ namespace ocr {
           //---------------------------------------------------------------------
 
           // Calculate the sum of all operations
-          for( size_t i = 0; i < m_width; ++i ){
-            for( size_t j = 0; j < m_height; ++j ){
-              const size_t ki = m_width - i - 1;
-              const size_t kj = m_height - j - 1;
+          for( std::size_t i = 0; i < m_width; ++i ){
+            for( std::size_t j = 0; j < m_height; ++j ){
+              const std::size_t ki = m_width - i - 1;
+              const std::size_t kj = m_height - j - 1;
               accumulator_r += m_kernel[ki][kj] * values[i][j].r;
               accumulator_g += m_kernel[ki][kj] * values[i][j].g;
               accumulator_b += m_kernel[ki][kj] * values[i][j].b;
@@ -286,7 +287,7 @@ namespace ocr {
     //-------------------------------------------------------------------------
 
     // Delete 2D array
-    for( size_t i = 0; i < m_height; ++i ){
+    for( std::size_t i = 0; i < m_height; ++i ){
       delete [] values[i];
     }
     delete [] values;

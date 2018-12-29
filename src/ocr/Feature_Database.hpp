@@ -21,14 +21,17 @@
 # pragma once
 #endif
 
-#include <list>
 #include "Feature_Vector.hpp"
 #include "Feature_Loader.hpp"
 #include "Image.hpp"
 
+#include <utility> // std::pair
+#include <vector>  // std::vector
+#include <cstddef> // std::size_t
+
 namespace ocr {
 
-  class Feature_Database{
+  class Feature_Database {
 
     //------------------------------------------------------------------------
     // Public Types
@@ -50,7 +53,7 @@ namespace ocr {
     //------------------------------------------------------------------------
   public:
 
-    size_t size() const;
+    std::size_t size() const;
 
     //------------------------------------------------------------------------
     // Access
@@ -73,7 +76,7 @@ namespace ocr {
 
   };
 
-  inline size_t Feature_Database::size() const{
+  inline std::size_t Feature_Database::size() const{
     return m_clusters.size();
   }
 

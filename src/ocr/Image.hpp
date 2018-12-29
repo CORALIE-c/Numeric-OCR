@@ -24,6 +24,8 @@
 #include "base_types.hpp"
 #include "Color.hpp"
 
+#include <cstddef> // std::size_t
+
 namespace ocr {
 
   /////////////////////////////////////////////////////////////////////////////
@@ -39,7 +41,7 @@ namespace ocr {
     //-------------------------------------------------------------------------
   public:
 
-    typedef size_t    size_type;
+    typedef std::size_t size_type;
     typedef Color_RGB pixel_type;
 
     //-------------------------------------------------------------------------
@@ -164,9 +166,9 @@ namespace ocr {
     ///
     virtual void set( size_type x, size_type y, pixel_type value );
 
-    void set_grayscale( size_t x, size_t y, ubyte value );
+    void set_grayscale( std::size_t x, std::size_t y, ubyte value );
 
-    void set_binary( size_t x, size_t y, ubyte value );
+    void set_binary( std::size_t x, std::size_t y, ubyte value );
 
     ///
     /// @brief FIlls this image with the uniform pixel value

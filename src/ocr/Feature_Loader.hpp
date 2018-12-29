@@ -23,8 +23,10 @@
 
 #include "Image.hpp"
 #include "Feature_Vector.hpp"
+
 #include <vector>
-#include <cmath>
+#include <cstddef> // std::size_t
+#include <iosfwd>  // std::ostream fwd
 
 namespace ocr {
 
@@ -44,8 +46,8 @@ namespace ocr {
   void load_features( const Image& image,
                       feature_collection&  features,
                       boundary_collection& bounds,
-                      size_t horizontal_divs = 10,
-                      size_t vertical_divs   = 10 );
+                      std::size_t horizontal_divs = 10,
+                      std::size_t vertical_divs   = 10 );
 
 }  // namespace ocr
 

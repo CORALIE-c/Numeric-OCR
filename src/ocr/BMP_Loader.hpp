@@ -14,8 +14,8 @@
  * Sep 23, 2015: 
  * - BMP_Image_Loader.hpp created
  */
-#ifndef RODU4140_BMP_LOADER_HPP_
-#define RODU4140_BMP_LOADER_HPP_
+#ifndef OCR_BMP_LOADER_HPP_
+#define OCR_BMP_LOADER_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -24,7 +24,7 @@
 #include "base_types.hpp"
 #include "Image.hpp"
 
-namespace rodu4140 {
+namespace ocr {
 
   typedef enum image_status_{
     IS_SUCCESS        = 0,
@@ -42,8 +42,8 @@ namespace rodu4140 {
 
   void destroy_image( Image** image );
 
-}  // namespace rodu4140
+}  // namespace ocr
 
 
 
-#endif /* RODU4140_BMP_LOADER_HPP_ */
+#endif /* OCR_BMP_LOADER_HPP_ */

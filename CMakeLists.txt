@@ -3,22 +3,22 @@ cmake_minimum_required(VERSION 3.4)
 project(NumericDigitsOCR LANGUAGES CXX)
 
 set(source_files
-  src/rodu4140/base_types.hpp
-  src/rodu4140/BMP_Loader.cpp
-  src/rodu4140/BMP_Loader.hpp
-  src/rodu4140/Color.cpp
-  src/rodu4140/Color.hpp
-  src/rodu4140/Feature_Database.cpp
-  src/rodu4140/Feature_Database.hpp
-  src/rodu4140/Feature_Loader.cpp
-  src/rodu4140/Feature_Loader.hpp
-  src/rodu4140/Feature_Vector.cpp
-  src/rodu4140/Feature_Vector.hpp
-  src/rodu4140/Image.cpp
-  src/rodu4140/Image.hpp
-  src/rodu4140/input.hpp
-  src/rodu4140/Kernel_Image_Operator.cpp
-  src/rodu4140/Kernel_Image_Operator.hpp
+  src/ocr/base_types.hpp
+  src/ocr/BMP_Loader.cpp
+  src/ocr/BMP_Loader.hpp
+  src/ocr/Color.cpp
+  src/ocr/Color.hpp
+  src/ocr/Feature_Database.cpp
+  src/ocr/Feature_Database.hpp
+  src/ocr/Feature_Loader.cpp
+  src/ocr/Feature_Loader.hpp
+  src/ocr/Feature_Vector.cpp
+  src/ocr/Feature_Vector.hpp
+  src/ocr/Image.cpp
+  src/ocr/Image.hpp
+  src/ocr/input.hpp
+  src/ocr/Kernel_Image_Operator.cpp
+  src/ocr/Kernel_Image_Operator.hpp
   src/main.cpp
 )
 

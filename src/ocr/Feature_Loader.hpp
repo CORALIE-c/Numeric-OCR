@@ -14,8 +14,8 @@
  * Nov 16, 2015: 
  * - Feature_Loader.hpp created
  */
-#ifndef RODU4140_FEATURE_LOADER_HPP_
-#define RODU4140_FEATURE_LOADER_HPP_
+#ifndef OCR_FEATURE_LOADER_HPP_
+#define OCR_FEATURE_LOADER_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -26,7 +26,7 @@
 #include <vector>
 #include <cmath>
 
-namespace rodu4140 {
+namespace ocr {
 
   struct boundary{
     int top, left, bottom, right;
@@ -47,8 +47,8 @@ namespace rodu4140 {
                       size_t horizontal_divs = 10,
                       size_t vertical_divs   = 10 );
 
-}  // namespace rodu4140
+}  // namespace ocr
 
 
 
-#endif /* RODU4140_FEATURE_LOADER_HPP_ */
+#endif /* OCR_FEATURE_LOADER_HPP_ */

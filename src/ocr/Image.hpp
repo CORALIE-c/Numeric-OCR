@@ -14,8 +14,8 @@
  * Sep 21, 2015: 
  * - Image.hpp created
  */
-#ifndef RODU4140_IMAGE_HPP_
-#define RODU4140_IMAGE_HPP_
+#ifndef OCR_IMAGE_HPP_
+#define OCR_IMAGE_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -24,10 +24,10 @@
 #include "base_types.hpp"
 #include "Color.hpp"
 
-namespace rodu4140 {
+namespace ocr {
 
   /////////////////////////////////////////////////////////////////////////////
-  /// @class rodu4140::Image
+  /// @class ocr::Image
   ///
   /// @brief This object is an abstract representation of an image
   ///
@@ -81,7 +81,7 @@ namespace rodu4140 {
     ///
     Image( const Image& x );
 
-#ifdef RODU4140_COMPILER_HAS_CPP11_RVALUE
+#ifdef OCR_COMPILER_HAS_CPP11_RVALUE
 
     ///
     /// @brief Cosntructs an image by moving the data from @p x to @p this
@@ -211,6 +211,6 @@ namespace rodu4140 {
     return m_height;
   }
 
-}  // namespace rodu4140
+}  // namespace ocr
 
-#endif /* RODU4140_IMAGE_HPP_ */
+#endif /* OCR_IMAGE_HPP_ */

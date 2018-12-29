@@ -18,7 +18,7 @@
 #include "Feature_Loader.hpp"
 #include <iostream>
 
-namespace rodu4140 {
+namespace ocr {
 
   //--------------------------------------------------------------------------
   // Stream Operators
@@ -250,5 +250,5 @@ namespace rodu4140 {
   }
 
 
-}  // namespace rodu4140
+}  // namespace ocr
 

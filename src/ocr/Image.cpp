@@ -19,7 +19,7 @@
 #include <cstring>
 #include <utility>
 
-namespace rodu4140{
+namespace ocr{
 
   //---------------------------------------------------------------------------
   // Constructor / Destructor
@@ -49,7 +49,7 @@ namespace rodu4140{
     std::copy( x.m_data, x.m_data + m_width*m_height, m_data );
   }
 
-#ifdef RODU4140_COMPILER_HAS_CPP11_RVALUE
+#ifdef OCR_COMPILER_HAS_CPP11_RVALUE
 
   Image::Image( Image&& x )
     :  m_width(std::move(x.m_width)),

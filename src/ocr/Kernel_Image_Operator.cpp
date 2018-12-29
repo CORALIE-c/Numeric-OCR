@@ -16,7 +16,7 @@
  */
 #include "Kernel_Image_Operator.hpp"
 
-namespace rodu4140 {
+namespace ocr {
 
   //---------------------------------------------------------------------------
   // Constructor / Destructor
@@ -300,4 +300,4 @@ namespace rodu4140 {
     return (*this);
   }
 
-}  // namespace rodu4140
+}  // namespace ocr

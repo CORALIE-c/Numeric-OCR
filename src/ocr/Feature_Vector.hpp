@@ -14,8 +14,8 @@
  * Nov 16, 2015: 
  * - Feature.hpp created
  */
-#ifndef RODU4140_FEATURE_VECTOR_HPP_
-#define RODU4140_FEATURE_VECTOR_HPP_
+#ifndef OCR_FEATURE_VECTOR_HPP_
+#define OCR_FEATURE_VECTOR_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -25,7 +25,7 @@
 #include <vector>
 #include <ostream>
 
-namespace rodu4140 {
+namespace ocr {
 
   class Feature_Vector{
 
@@ -144,6 +144,6 @@ namespace rodu4140 {
     return !(lhs < rhs);
   }
 
-}  // namespace rodu4140
+}  // namespace ocr
 
-#endif /* RODU4140_FEATURE_VECTOR_HPP_ */
+#endif /* OCR_FEATURE_VECTOR_HPP_ */

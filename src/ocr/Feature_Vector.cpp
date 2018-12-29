@@ -16,7 +16,7 @@
  */
 #include "Feature_Vector.hpp"
 
-namespace rodu4140 {
+namespace ocr {
 
   //--------------------------------------------------------------------------
   // Constructor
@@ -115,5 +115,5 @@ namespace rodu4140 {
   }
 
 
-}  // namespace rodu4140
+}  // namespace ocr
 

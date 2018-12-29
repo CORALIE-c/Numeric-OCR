@@ -14,8 +14,8 @@
  * Nov 16, 2015: 
  * - Feature_Database.hpp created
  */
-#ifndef RODU4140_FEATURE_DATABASE_HPP_
-#define RODU4140_FEATURE_DATABASE_HPP_
+#ifndef OCR_FEATURE_DATABASE_HPP_
+#define OCR_FEATURE_DATABASE_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -26,7 +26,7 @@
 #include "Feature_Loader.hpp"
 #include "Image.hpp"
 
-namespace rodu4140 {
+namespace ocr {
 
   class Feature_Database{
 
@@ -77,8 +77,8 @@ namespace rodu4140 {
     return m_clusters.size();
   }
 
-}  // namespace rodu4140
+}  // namespace ocr
 
 
 
-#endif /* RODU4140_FEATURE_DATABASE_HPP_ */
+#endif /* OCR_FEATURE_DATABASE_HPP_ */

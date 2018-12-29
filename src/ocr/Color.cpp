@@ -16,7 +16,7 @@
  */
 #include "Color.hpp"
 
-namespace rodu4140 {
+namespace ocr {
 
   //-------------------------------------------------------------------------
   // Public Static Constants
@@ -121,5 +121,5 @@ namespace rodu4140 {
     return o;
   }
 
-}  // namespace rodu4140
+}  // namespace ocr
 

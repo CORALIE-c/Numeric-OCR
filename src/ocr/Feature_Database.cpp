@@ -19,7 +19,7 @@
 #include <limits>
 #include <map>
 
-namespace rodu4140{
+namespace ocr{
 
   Feature_Database::Feature_Database(){}
 

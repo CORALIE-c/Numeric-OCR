@@ -27,7 +27,7 @@
 
 #define VERSION(maj,min,rev) #maj "." #min "." #rev
 
-#define RODU4140_VERSION VERSION(1,0,0)
+#define OCR_VERSION VERSION(1,0,0)
 
 // RapidJSON for loading/storing JSON elements
 #include <rapidjson/rapidjson.h>
@@ -56,13 +56,13 @@
 #endif
 
 // Image Processing Libraries
-#include "rodu4140/base_types.hpp"
-#include "rodu4140/BMP_Loader.hpp"
-#include "rodu4140/Image.hpp"
-#include "rodu4140/Kernel_Image_Operator.hpp"
-#include "rodu4140/input.hpp"
-#include "rodu4140/Feature_Loader.hpp"
-#include "rodu4140/Feature_Database.hpp"
+#include "ocr/base_types.hpp"
+#include "ocr/BMP_Loader.hpp"
+#include "ocr/Image.hpp"
+#include "ocr/Kernel_Image_Operator.hpp"
+#include "ocr/input.hpp"
+#include "ocr/Feature_Loader.hpp"
+#include "ocr/Feature_Database.hpp"
 //----------------------------------------------------------------------------
 // Types
 //----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ typedef void (*menu_ptr)();
 typedef std::pair<std::string, menu_ptr> menu_op;
 typedef std::pair<menu_ptr, menu_op>     menu_tx;
 
-typedef std::vector<std::pair<std::string,rodu4140::Kernel_Image_Operator*>> kernel_collection;
+typedef std::vector<std::pair<std::string,ocr::Kernel_Image_Operator*>> kernel_collection;
 
 //----------------------------------------------------------------------------
 // Constants
@@ -93,10 +93,10 @@ const int Y_DIVS = 5;
 //----------------------------------------------------------------------------
 
 kernel_collection             g_kernels;
-rodu4140::feature_collection  g_scanned_image_features;
-rodu4140::boundary_collection g_scanned_image_boundaries;
-rodu4140::Image*              g_scanned_image;
-rodu4140::Feature_Database    g_feature_db;
+ocr::feature_collection  g_scanned_image_features;
+ocr::boundary_collection g_scanned_image_boundaries;
+ocr::Image*              g_scanned_image;
+ocr::Feature_Database    g_feature_db;
 
 //----------------------------------------------------------------------------
 // Prototypes
@@ -132,7 +132,7 @@ void convert_grayscale_to_binary_adaptive( void );
 void display_menu( int menu ){
 
   std::ostringstream version;
-  version << RODU4140_VERSION << "-"
+  version << OCR_VERSION << "-"
           << std::string(__DATE__,4,2)  // Day
           << std::dec << std::setfill('0') << std::setw(2) << COMPILED_MONTH // Month
           << std::string(__DATE__,7,4); // Year
@@ -200,28 +200,28 @@ bool string_ends_with( const std::string& str, const std::string& sub ){
   }
 }
 
-namespace rodu4140{
+namespace ocr{
 
   void zs_thinning(){
 
-    std::string infile  = rodu4140::get_string_input("Enter input file: ", "Error, invalid input");
+    std::string infile  = ocr::get_string_input("Enter input file: ", "Error, invalid input");
 
-    rodu4140::Image* image;
-    int status = rodu4140::load_bmp_image_binary( infile.c_str(), &image );
+    ocr::Image* image;
+    int status = ocr::load_bmp_image_binary( infile.c_str(), &image );
 
-    if( status != rodu4140::IS_SUCCESS ){
+    if( status != ocr::IS_SUCCESS ){
       std::cout << "Error loading input file\n";
-      rodu4140::get_any_input("Press enter to continue...\n");
+      ocr::get_any_input("Press enter to continue...\n");
       return;
     }
 
-    std::string outfile = rodu4140::get_string_input("Enter output file: ", "Error, invalid input");
+    std::string outfile = ocr::get_string_input("Enter output file: ", "Error, invalid input");
 
     //-------------------=-----------------------------------------------------
 
     Image active_buffer = Image(*image);
 
-    rodu4140::destroy_image( &image );
+    ocr::destroy_image( &image );
 
     typedef std::vector<std::pair<int,int>> marked_collection;
 
@@ -288,14 +288,14 @@ namespace rodu4140{
       prime_pass = !prime_pass;
     }while(deletion_made);
 
-    if( !rodu4140::save_bmp_image( outfile.c_str(), &active_buffer ) ){
+    if( !ocr::save_bmp_image( outfile.c_str(), &active_buffer ) ){
       std::cout << "Error saving output file\n";
-      rodu4140::get_any_input("Press enter to continue...\n");
+      ocr::get_any_input("Press enter to continue...\n");
       return;
     }
 
     std::cout << "File successfully output to '" << outfile << "'.\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
   }
 
 
@@ -388,7 +388,7 @@ namespace rodu4140{
 
     // Push the new kernel image operator down
     collection.push_back(
-      std::make_pair( name, new rodu4140::Kernel_Image_Operator(kern) )
+      std::make_pair( name, new ocr::Kernel_Image_Operator(kern) )
     );
 
     std::cout << "   [X] loaded filter '" << name << "'.\n";
@@ -504,16 +504,16 @@ namespace rodu4140{
 void load_filters(){
   std::cout << "Please enter either a *.filter file, or a directory containing\n"
             << "*.kernel files to load.\n";
-  std::string path = rodu4140::get_string_input( "Filter path: ", "Error, invalid input." );
+  std::string path = ocr::get_string_input( "Filter path: ", "Error, invalid input." );
 
   if(string_ends_with(path,".kernel")){
     std::cout << " * Opening " << path << ":\n";
-    rodu4140::load_kernel_from_file( path, g_kernels );
+    ocr::load_kernel_from_file( path, g_kernels );
   }else{
-    rodu4140::load_kernels_from_dir( path, g_kernels );
+    ocr::load_kernels_from_dir( path, g_kernels );
   }
   std::cout << std::flush;
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 //-----------------------------------------------------------------------------
@@ -535,7 +535,7 @@ void display_filters(){
 
 void view_filters(){
   display_filters();
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 //-----------------------------------------------------------------------------
@@ -544,43 +544,43 @@ void apply_filters(){
 
   display_filters();
   if(!g_kernels.size()){
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
   std::cout << "Please enter the kernel number to load, the path to the image to modify,\n"
                "and the path to the output file.\n";
-  int index = rodu4140::get_int_input("Kernel number: ","Error, invalid input");
+  int index = ocr::get_int_input("Kernel number: ","Error, invalid input");
   while( index < 0 || index > (int) (g_kernels.size()-1) ){
     std::cout << "Error, input out of range.\n";
-    index = rodu4140::get_int_input("Kernel number: ","Error, invalid input");
+    index = ocr::get_int_input("Kernel number: ","Error, invalid input");
   }
-  std::string infile  = rodu4140::get_string_input("Enter input file: ", "Error, invalid input");
-  std::string outfile = rodu4140::get_string_input("Enter output file: ", "Error, invalid input");
+  std::string infile  = ocr::get_string_input("Enter input file: ", "Error, invalid input");
+  std::string outfile = ocr::get_string_input("Enter output file: ", "Error, invalid input");
 
-  rodu4140::Image* image;
-  int status = rodu4140::load_bmp_image_color( infile.c_str(), &image );
+  ocr::Image* image;
+  int status = ocr::load_bmp_image_color( infile.c_str(), &image );
 
-  if( status != rodu4140::IS_SUCCESS ){
+  if( status != ocr::IS_SUCCESS ){
     std::cout << "Error loading input file\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
-  rodu4140::Kernel_Image_Operator* op = g_kernels[index].second;
+  ocr::Kernel_Image_Operator* op = g_kernels[index].second;
 
-  rodu4140::Image out = op->operate(*image);
+  ocr::Image out = op->operate(*image);
 
-  if( !rodu4140::save_bmp_image( outfile.c_str(), &out ) ){
-    rodu4140::destroy_image( &image );
+  if( !ocr::save_bmp_image( outfile.c_str(), &out ) ){
+    ocr::destroy_image( &image );
     std::cout << "Error saving output file\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
-  rodu4140::destroy_image( &image );
+  ocr::destroy_image( &image );
   std::cout << "File successfully output to '" << outfile << "'.\n";
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 //----------------------------------------------------------------------------
@@ -592,26 +592,26 @@ void generate_gaussian_filter(){
 
   //---------------------------------------------------------------------------
 
-  float sigma = rodu4140::get_float_input("Sigma (>0.0): ", "Invalid value entered.\n");
+  float sigma = ocr::get_float_input("Sigma (>0.0): ", "Invalid value entered.\n");
   // Sanitize input
   while(sigma<0.0f){
     std::cout << "Sigma must be positive!\n";
-    sigma = rodu4140::get_float_input("Sigma (>0.0): ", "Invalid value entered.\n");
+    sigma = ocr::get_float_input("Sigma (>0.0): ", "Invalid value entered.\n");
   }
 
   //---------------------------------------------------------------------------
 
-  int width = rodu4140::get_int_input("Width from center: ", "Invalid value\n");
+  int width = ocr::get_int_input("Width from center: ", "Invalid value\n");
   // Sanitize input
   while( width < 0){
     std::cout << "Width must be positive!\n";
-    width = rodu4140::get_int_input("Width from center: ", "Invalid value\n");
+    width = ocr::get_int_input("Width from center: ", "Invalid value\n");
   }
 
   //---------------------------------------------------------------------------
 
-  std::string name = rodu4140::get_string_input("Name of Filter: ", "Invalid value\n");
-  std::string filename = rodu4140::get_string_input("Filename: ", "Invalid value\n");
+  std::string name = ocr::get_string_input("Name of Filter: ", "Invalid value\n");
+  std::string filename = ocr::get_string_input("Filename: ", "Invalid value\n");
 
   if(!string_ends_with(filename,".kernel")){
     filename += ".kernel";
@@ -619,7 +619,7 @@ void generate_gaussian_filter(){
   std::ofstream file(filename);
   if(!file.good()){
     std::cout << "Error: Unable to open file " << filename << "\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
@@ -670,10 +670,10 @@ void generate_gaussian_filter(){
   file << output;
   file.close();
 
-  g_kernels.push_back(std::make_pair( name, new rodu4140::Kernel_Image_Operator(kernel) ));
+  g_kernels.push_back(std::make_pair( name, new ocr::Kernel_Image_Operator(kernel) ));
 
   std::cout << "Successfully written to file\n";
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 //----------------------------------------------------------------------------
@@ -685,13 +685,13 @@ void generate_feature_database(){
   std::cout << "Please enter the path to a directory of images to generate a feature database for\n"
                "followed by a bitmap image for the glyph used to represent that database.\n";
 
-  std::string path  = rodu4140::get_string_input("Enter feature path: ", "Error, invalid input");
+  std::string path  = ocr::get_string_input("Enter feature path: ", "Error, invalid input");
 
   DIR *dir;
   struct dirent *entry;
   if((dir = opendir( path.c_str() )) == NULL) {
     std::cout << "Error opening directory '" << path << "'\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
@@ -706,25 +706,25 @@ void generate_feature_database(){
     glyph_path += "/glyph.bmp";
   }
 
-  rodu4140::Image* glyph_image;
-  int status = rodu4140::load_bmp_image_binary( glyph_path.c_str(), &glyph_image );
+  ocr::Image* glyph_image;
+  int status = ocr::load_bmp_image_binary( glyph_path.c_str(), &glyph_image );
 
-  if( status != rodu4140::IS_SUCCESS ){
-    std::string glyph = rodu4140::get_string_input("Enter glyph path: ", "Error, invalid input");
+  if( status != ocr::IS_SUCCESS ){
+    std::string glyph = ocr::get_string_input("Enter glyph path: ", "Error, invalid input");
 
-    int status = rodu4140::load_bmp_image_binary( glyph.c_str(), &glyph_image );
+    int status = ocr::load_bmp_image_binary( glyph.c_str(), &glyph_image );
 
-    if( status != rodu4140::IS_SUCCESS ){
+    if( status != ocr::IS_SUCCESS ){
       closedir(dir);
       std::cout << "Error loading glyph file\n";
-      rodu4140::get_any_input("Press enter to continue...\n");
+      ocr::get_any_input("Press enter to continue...\n");
       return;
     }
   }
 
   //--------------------------------------------------------------------------
 
-  std::string outfile = rodu4140::get_string_input("Enter output file (*.fdb): ", "Error, invalid input");
+  std::string outfile = ocr::get_string_input("Enter output file (*.fdb): ", "Error, invalid input");
   if(!string_ends_with(outfile,".fdb")){
     outfile += ".fdb";
   }
@@ -732,19 +732,19 @@ void generate_feature_database(){
   std::ofstream file(outfile);
   if(!file.good()){
     closedir(dir);
-    rodu4140::destroy_image( &glyph_image );
+    ocr::destroy_image( &glyph_image );
     std::cout << "Error: Unable to open file " << outfile << "\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
   //--------------------------------------------------------------------------
 
-  rodu4140::feature_collection  all_vectors;
+  ocr::feature_collection  all_vectors;
 
   while ((entry = readdir(dir)) != NULL) {
-    rodu4140::feature_collection  current_vectors;
-    rodu4140::boundary_collection unused;
+    ocr::feature_collection  current_vectors;
+    ocr::boundary_collection unused;
     // Only open files, not previous directory or current one
     if( !(strcmp( entry->d_name, "." ) == 0 || strcmp( entry->d_name, ".." ) == 0) &&
         string_ends_with( entry->d_name, ".bmp") && strcmp( entry->d_name, "glyph.bmp") != 0 ){
@@ -759,14 +759,14 @@ void generate_feature_database(){
       }
 
       std::cout << "Scanning " << entry->d_name << "\n";
-      rodu4140::Image* image_entry;
+      ocr::Image* image_entry;
 
-      int status = rodu4140::load_bmp_image_binary( filepath.c_str(), &image_entry );
+      int status = ocr::load_bmp_image_binary( filepath.c_str(), &image_entry );
 
-      if( status == rodu4140::IS_SUCCESS ){
+      if( status == ocr::IS_SUCCESS ){
         std::cout << " o Loading feature vector from " << entry->d_name << ".\n";
-        rodu4140::load_features( *image_entry, current_vectors, unused, X_DIVS, Y_DIVS );
-        rodu4140::destroy_image( &image_entry );
+        ocr::load_features( *image_entry, current_vectors, unused, X_DIVS, Y_DIVS );
+        ocr::destroy_image( &image_entry );
       }
     }
     all_vectors.insert( all_vectors.end(), current_vectors.begin(), current_vectors.end() );
@@ -779,9 +779,9 @@ void generate_feature_database(){
   if(!all_vectors.size()){
     std::cout << "No feature vectors found! Unable to create database.\n";
     file.close();
-    rodu4140::destroy_image( &glyph_image );
+    ocr::destroy_image( &glyph_image );
 
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
   }
 
   // Write to database file
@@ -800,8 +800,8 @@ void generate_feature_database(){
   }
   file << "\n";
 
-  for( rodu4140::Feature_Vector& vector : all_vectors ){
-    for( rodu4140::Feature_Vector::iterator iter = vector.begin(); iter != vector.end(); ++iter ){
+  for( ocr::Feature_Vector& vector : all_vectors ){
+    for( ocr::Feature_Vector::iterator iter = vector.begin(); iter != vector.end(); ++iter ){
       file << *iter << " ";
     }
     file << "\n";
@@ -811,8 +811,8 @@ void generate_feature_database(){
 
   //--------------------------------------------------------------------------
 
-  rodu4140::destroy_image( &glyph_image );
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::destroy_image( &glyph_image );
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 void load_feature_database_from_file( const char* filename ){
@@ -834,7 +834,7 @@ void load_feature_database_from_file( const char* filename ){
 
   // Extract Image
 
-  rodu4140::Image image(width,height);
+  ocr::Image image(width,height);
 
   char* line = new char[width+1];
 
@@ -858,17 +858,17 @@ void load_feature_database_from_file( const char* filename ){
 
   file.get(); // ignore the \n in the file
 
-  rodu4140::feature_collection features;
+  ocr::feature_collection features;
 
   std::cout << " o " << no_of_vectors << " features loaded\n";
   for( size_t i = 0; i < no_of_vectors; ++i ){
-    rodu4140::Feature_Vector::feature_collection feat_values;
+    ocr::Feature_Vector::feature_collection feat_values;
     for( size_t j = 0; j < vector_length; ++j ){
       double value;
       file >> value;
       feat_values.push_back(value);
     }
-    rodu4140::Feature_Vector feature(feat_values);
+    ocr::Feature_Vector feature(feat_values);
     //std::cout << "  - " << (i+1) << ": " << feature << std::endl;
     features.push_back(feature);
   }
@@ -885,7 +885,7 @@ void load_feature_database(){
 
   std::cout << "Please enter either the feature database file (*.fdb), or a directory containing them to load.\n";
 
-  std::string inpath = rodu4140::get_string_input("Enter input path: ", "Error, invalid input");
+  std::string inpath = ocr::get_string_input("Enter input path: ", "Error, invalid input");
 
   // Open feature database file (*.fdb) if specified, or directory otherwise
   if(string_ends_with(inpath,".fdb")){
@@ -895,7 +895,7 @@ void load_feature_database(){
     struct dirent *entry;
     if((dir = opendir( inpath.c_str() )) == NULL) {
       std::cout << "Error opening directory '" << inpath << "'\n";
-      rodu4140::get_any_input("Press enter to continue...\n");
+      ocr::get_any_input("Press enter to continue...\n");
       return;
     }
 
@@ -920,20 +920,20 @@ void load_feature_database(){
     closedir(dir);
   }
 
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 void scan_for_features(){
   std::cout << "Please enter the path to the binary image.\n";
-  std::string infile  = rodu4140::get_string_input("Enter input file: ", "Error, invalid input");
+  std::string infile  = ocr::get_string_input("Enter input file: ", "Error, invalid input");
 
-  rodu4140::Image* image;
+  ocr::Image* image;
 
-  int status = rodu4140::load_bmp_image_binary( infile.c_str(), &image );
+  int status = ocr::load_bmp_image_binary( infile.c_str(), &image );
 
-  if( status != rodu4140::IS_SUCCESS ){
+  if( status != ocr::IS_SUCCESS ){
     std::cout << "Error loading input file\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
@@ -944,29 +944,29 @@ void scan_for_features(){
     g_scanned_image_features.clear();
 
     if(g_scanned_image){
-      rodu4140::destroy_image(&g_scanned_image);
+      ocr::destroy_image(&g_scanned_image);
     }
   }
 
   g_scanned_image = image;
 
-  rodu4140::feature_collection&  vec    = g_scanned_image_features;
-  rodu4140::boundary_collection& bounds = g_scanned_image_boundaries;
-  rodu4140::load_features( *g_scanned_image, vec, bounds, X_DIVS, Y_DIVS );
+  ocr::feature_collection&  vec    = g_scanned_image_features;
+  ocr::boundary_collection& bounds = g_scanned_image_boundaries;
+  ocr::load_features( *g_scanned_image, vec, bounds, X_DIVS, Y_DIVS );
 
   // Print newly discovered glyph
   int current = 1;
-  for( rodu4140::boundary& bound : bounds ){
+  for( ocr::boundary& bound : bounds ){
     std::cout << "Glyph " << current++ << " found at " << bound << "\n";
   }
 
   current = 1;
-  for( rodu4140::Feature_Vector& vector : vec ){
+  for( ocr::Feature_Vector& vector : vec ){
     std::cout << "Vector " << current++ << ": " << vector << "\n";
   }
 
   // Print calculated vectors
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 //-----------------------------------------------------------------------------
@@ -976,29 +976,29 @@ void scan_for_features(){
 void analyze_features(){
   if(!(g_scanned_image_boundaries.size() && g_scanned_image_features.size() && g_scanned_image)){
     std::cout << "Error: No image scanned. Please scan image first.\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
   if(!g_feature_db.size()){
     std::cout << "Error: No features in database. Please scan database first.\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
-  std::string path  = rodu4140::get_string_input("Output filename: ", "Error, invalid input");
+  std::string path  = ocr::get_string_input("Output filename: ", "Error, invalid input");
 
   if( !string_ends_with(path,".bmp") ){
     path += ".bmp";
   }
 
-  rodu4140::Image result( g_scanned_image->width(), g_scanned_image->height() );
+  ocr::Image result( g_scanned_image->width(), g_scanned_image->height() );
   result.fill_binary(0);
 
   g_feature_db.analyze( result, g_scanned_image_boundaries, g_scanned_image_features );
 
-  rodu4140::save_bmp_image( path.c_str(), &result );
+  ocr::save_bmp_image( path.c_str(), &result );
 
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 //-----------------------------------------------------------------------------
@@ -1008,57 +1008,57 @@ void analyze_features(){
 void convert_color_to_grayscale(){
   std::cout << "Please enter the path to the color image, and the \n"
                "path to store the grayscale image.\n";
-  std::string infile  = rodu4140::get_string_input("Enter input file: ", "Error, invalid input");
+  std::string infile  = ocr::get_string_input("Enter input file: ", "Error, invalid input");
 
-  rodu4140::Image* image;
-  int status = rodu4140::load_bmp_image_grayscale( infile.c_str(), &image );
+  ocr::Image* image;
+  int status = ocr::load_bmp_image_grayscale( infile.c_str(), &image );
 
-  if( status != rodu4140::IS_SUCCESS ){
+  if( status != ocr::IS_SUCCESS ){
     std::cout << "Error loading input file\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
-  std::string outfile = rodu4140::get_string_input("Enter output file: ", "Error, invalid input");
+  std::string outfile = ocr::get_string_input("Enter output file: ", "Error, invalid input");
 
-  if( !rodu4140::save_bmp_image( outfile.c_str(), image ) ){
+  if( !ocr::save_bmp_image( outfile.c_str(), image ) ){
     std::cout << "Error saving output file\n";
   }else{
     std::cout << "File successfully output to '" << outfile << "'.\n";
   }
 
-  rodu4140::destroy_image( &image );
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::destroy_image( &image );
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 void convert_grayscale_to_binary_static(){
   std::cout << "Please enter the path to the grayscale image, the \n"
                "path to store the binary image, and the threshold \n"
                "for producing a binary image.\n";
-  std::string infile  = rodu4140::get_string_input("Enter input file: ", "Error, invalid input");
+  std::string infile  = ocr::get_string_input("Enter input file: ", "Error, invalid input");
 
-  rodu4140::Image* image;
-  int status = rodu4140::load_bmp_image_grayscale( infile.c_str(), &image );
+  ocr::Image* image;
+  int status = ocr::load_bmp_image_grayscale( infile.c_str(), &image );
 
-  if( status != rodu4140::IS_SUCCESS ){
+  if( status != ocr::IS_SUCCESS ){
     std::cout << "Error loading input file\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
-  std::string outfile = rodu4140::get_string_input("Enter output file: ", "Error, invalid input");
+  std::string outfile = ocr::get_string_input("Enter output file: ", "Error, invalid input");
 
-  int threshold = rodu4140::get_int_input("Threshold (0-255): ","Error, invalid input");
+  int threshold = ocr::get_int_input("Threshold (0-255): ","Error, invalid input");
   while( threshold < 0 || threshold > 255){
     std::cout << "Error, input out of range.\n";
-    threshold = rodu4140::get_int_input("Threshold (0-255): ","Error, invalid input");
+    threshold = ocr::get_int_input("Threshold (0-255): ","Error, invalid input");
   }
 
   for( size_t i = 0; i < image->width(); ++i ){
     for( size_t j = 0; j < image->height(); ++j ){
-      rodu4140::Image::pixel_type out_pixel;
-      rodu4140::Image::pixel_type pixel = image->at(i,j);
-      rodu4140::ubyte out = ((((pixel.r + pixel.g + pixel.b) / 3) > threshold) ? 255 : 0);
+      ocr::Image::pixel_type out_pixel;
+      ocr::Image::pixel_type pixel = image->at(i,j);
+      ocr::ubyte out = ((((pixel.r + pixel.g + pixel.b) / 3) > threshold) ? 255 : 0);
 
       out_pixel.r = out;
       out_pixel.g = out;
@@ -1068,14 +1068,14 @@ void convert_grayscale_to_binary_static(){
     }
   }
 
-  if( !rodu4140::save_bmp_image( outfile.c_str(), image ) ){
+  if( !ocr::save_bmp_image( outfile.c_str(), image ) ){
     std::cout << "Error saving output file\n";
   }else{
     std::cout << "File successfully output to '" << outfile << "'.\n";
   }
 
-  rodu4140::destroy_image( &image );
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::destroy_image( &image );
+  ocr::get_any_input("Press enter to continue...\n");
 }
 
 void convert_grayscale_to_binary_adaptive(){
@@ -1083,29 +1083,29 @@ void convert_grayscale_to_binary_adaptive(){
                "path to store the binary image, and the neighborhood \n"
                "size for the adaptive threshold.\n"
                "Note: larger thresholds take longer to compute.\n";
-  std::string infile  = rodu4140::get_string_input("Enter input file: ", "Error, invalid input");
+  std::string infile  = ocr::get_string_input("Enter input file: ", "Error, invalid input");
 
-  rodu4140::Image* image;
-  int status = rodu4140::load_bmp_image_grayscale( infile.c_str(), &image );
+  ocr::Image* image;
+  int status = ocr::load_bmp_image_grayscale( infile.c_str(), &image );
 
-  if( status != rodu4140::IS_SUCCESS ){
+  if( status != ocr::IS_SUCCESS ){
     std::cout << "Error loading input file\n";
-    rodu4140::get_any_input("Press enter to continue...\n");
+    ocr::get_any_input("Press enter to continue...\n");
     return;
   }
 
-  std::string outfile = rodu4140::get_string_input("Enter output file: ", "Error, invalid input");
+  std::string outfile = ocr::get_string_input("Enter output file: ", "Error, invalid input");
 
-  int neighborhood = rodu4140::get_int_input("Neighborhood (5-100): ","Error, invalid input");
+  int neighborhood = ocr::get_int_input("Neighborhood (5-100): ","Error, invalid input");
   while( neighborhood < 5 || neighborhood > 100){
     std::cout << "Error, input out of range.\n";
-    neighborhood = rodu4140::get_int_input("Neighborhood (5-100): ","Error, invalid input");
+    neighborhood = ocr::get_int_input("Neighborhood (5-100): ","Error, invalid input");
   }
 
-  rodu4140::u32 x_neighborhood = neighborhood;
-  rodu4140::u32 y_neighborhood = neighborhood;
+  ocr::u32 x_neighborhood = neighborhood;
+  ocr::u32 y_neighborhood = neighborhood;
 
-  rodu4140::Image out_image( image->width(), image->height() );
+  ocr::Image out_image( image->width(), image->height() );
 
   // Perform the calculation
   for( size_t x_seg = 0; x_seg < image->width(); ++x_seg ){
@@ -1125,10 +1125,10 @@ void convert_grayscale_to_binary_adaptive(){
       }
 
       // Calculate the segment average
-      rodu4140::u32 avg = 0;
+      ocr::u32 avg = 0;
       for( size_t i = 0; i < x_neighborhood; ++i ){
         for( size_t j = 0; j < y_neighborhood; ++j ){
-          rodu4140::Image::pixel_type pixel = image->at( x_seg + i, y_seg + j );
+          ocr::Image::pixel_type pixel = image->at( x_seg + i, y_seg + j );
 
           avg += pixel.r;
         }
@@ -1138,10 +1138,10 @@ void convert_grayscale_to_binary_adaptive(){
       // Calculate the thresholded image
       for( size_t i = 0; i < x_neighborhood; ++i ){
         for( size_t j = 0; j < y_neighborhood; ++j ){
-          rodu4140::Image::pixel_type pixel = image->at( x_seg + i, y_seg + j );
-          rodu4140::ubyte out = (( pixel.r >= avg ) ? 255 : 0);
+          ocr::Image::pixel_type pixel = image->at( x_seg + i, y_seg + j );
+          ocr::ubyte out = (( pixel.r >= avg ) ? 255 : 0);
 
-          rodu4140::Image::pixel_type out_pixel;
+          ocr::Image::pixel_type out_pixel;
           out_pixel.r = out;
           out_pixel.g = out;
           out_pixel.b = out;
@@ -1152,14 +1152,14 @@ void convert_grayscale_to_binary_adaptive(){
     }
   }
 
-  if( !rodu4140::save_bmp_image( outfile.c_str(), &out_image ) ){
+  if( !ocr::save_bmp_image( outfile.c_str(), &out_image ) ){
     std::cout << "Error saving output file\n";
   }else{
     std::cout << "File successfully output to '" << outfile << "'.\n";
   }
 
-  rodu4140::destroy_image( &image );
-  rodu4140::get_any_input("Press enter to continue...\n");
+  ocr::destroy_image( &image );
+  ocr::get_any_input("Press enter to continue...\n");
 
 }
 
@@ -1178,7 +1178,7 @@ int main( int argc, char** argv ){
   while(is_running){
 
     display_menu(current);
-    menu_option = rodu4140::get_int_input("Enter option: ","Error, please try again.");
+    menu_option = ocr::get_int_input("Enter option: ","Error, please try again.");
 
     switch(current){
     case menu_main:
@@ -1217,7 +1217,7 @@ int main( int argc, char** argv ){
         generate_gaussian_filter();
         break;
       case 5:
-        rodu4140::zs_thinning();
+        ocr::zs_thinning();
         break;
       }
 
@@ -1262,7 +1262,7 @@ int main( int argc, char** argv ){
 
       break;
     }
-    rodu4140::clear();
+    ocr::clear();
 
   }
 

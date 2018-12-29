@@ -4,7 +4,7 @@
  * @brief This header defines a standard set of both lexical and fixed-sized
  *        types.
  *
- * @author Matthew Rodusek (rodu4140@mylaurier.ca)
+ * @author Matthew Rodusek (matthew.rodusek@gmail.com)
  * @date   September 21, 2015
  */
 
@@ -14,8 +14,8 @@
  * September 21, 2015:
  * - base_types.hpp created
  */
-#ifndef RODU4140_BASE_TYPES_HPP_
-#define RODU4140_BASE_TYPES_HPP_
+#ifndef OCR_BASE_TYPES_HPP_
+#define OCR_BASE_TYPES_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -24,7 +24,7 @@
 #include <cstddef>
 #include <climits>
 
-namespace rodu4140 {
+namespace ocr {
 
 #if (UCHAR_MAX == 0xff)
   typedef signed char   s8;  /* signed byte   */
@@ -74,7 +74,7 @@ namespace rodu4140 {
   //---------------------------------------------------------------------------
 
   ///
-  /// @struct rodu4140::rgb
+  /// @struct ocr::rgb
   ///
   /// @brief A 3-component color value, 8 bits per channel (24-bit color)
   ///
@@ -87,7 +87,7 @@ namespace rodu4140 {
   //---------------------------------------------------------------------------
 
   ///
-  /// @struct rodu4140::rgb
+  /// @struct ocr::rgb
   ///
   /// @brief A 3-component color value with alpha, 8 bits per channel (32-bit
   ///        color)
@@ -104,4 +104,4 @@ namespace rodu4140 {
 }
 
 
-#endif /* RODU4140_BASE_TYPES_HPP_ */
+#endif /* OCR_BASE_TYPES_HPP_ */

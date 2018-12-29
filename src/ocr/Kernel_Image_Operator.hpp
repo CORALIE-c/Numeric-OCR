@@ -14,8 +14,8 @@
  * Sep 23, 2015: 
  * - Image Operator.hpp created
  */
-#ifndef RODU4140_KERNEL_IMAGE_OPERATOR_HPP_
-#define RODU4140_KERNEL_IMAGE_OPERATOR_HPP_
+#ifndef OCR_KERNEL_IMAGE_OPERATOR_HPP_
+#define OCR_KERNEL_IMAGE_OPERATOR_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -25,10 +25,10 @@
 #include <list>
 #include <vector>
 
-namespace rodu4140{
+namespace ocr{
 
   /////////////////////////////////////////////////////////////////////////////
-  /// @class rodu4140::Kernel_Image_Operator
+  /// @class ocr::Kernel_Image_Operator
   ///
   /// @brief An operator for an image, to be performed on all pixels in an
   ///        image
@@ -175,6 +175,6 @@ namespace rodu4140{
     }
   }
 
-} // namespace rodu4140
+} // namespace ocr
 
-#endif /* RODU4140_KERNEL_IMAGE_OPERATOR_HPP_ */
+#endif /* OCR_KERNEL_IMAGE_OPERATOR_HPP_ */

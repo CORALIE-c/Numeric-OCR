@@ -14,8 +14,8 @@
  * Oct 29, 2015: 
  * - input.hpp created
  */
-#ifndef RODU4140_INPUT_HPP_
-#define RODU4140_INPUT_HPP_
+#ifndef OCR_INPUT_HPP_
+#define OCR_INPUT_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -26,7 +26,7 @@
 #include <iomanip>
 #include <sstream>
 #include <stdlib.h>
-namespace rodu4140{
+namespace ocr{
 
   ///
   /// @brief Clear the system screen
@@ -117,4 +117,4 @@ namespace rodu4140{
   }
 
 }
-#endif /* RODU4140_INPUT_HPP_ */
+#endif /* OCR_INPUT_HPP_ */

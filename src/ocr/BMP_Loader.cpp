@@ -19,7 +19,7 @@
 #include <fstream>
 #include <iostream>
 
-namespace rodu4140 {
+namespace ocr {
 
   //---------------------------------------------------------------------------
   // Structures
@@ -319,5 +319,5 @@ namespace rodu4140 {
 
   //---------------------------------------------------------------------------
 
-}  // namespace rodu4140
+}  // namespace ocr
 

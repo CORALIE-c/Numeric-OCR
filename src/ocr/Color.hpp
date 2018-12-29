@@ -13,8 +13,8 @@
  * Sep 26, 2015: 
  * - Color.hpp created
  */
-#ifndef RODU4140_COLOR_HPP_
-#define RODU4140_COLOR_HPP_
+#ifndef OCR_COLOR_HPP_
+#define OCR_COLOR_HPP_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -23,10 +23,10 @@
 #include "base_types.hpp"
 #include <ostream>
 
-namespace rodu4140 {
+namespace ocr {
 
   /////////////////////////////////////////////////////////////////////////////
-  /// @class rodu4140::Color_RGB
+  /// @class ocr::Color_RGB
   ///
   /// @brief The color object
   ///
@@ -184,6 +184,6 @@ namespace rodu4140 {
     return Color_RGB(lhs) /= rhs;
   }
 
-}  // namespace rodu4140
+}  // namespace ocr
 
-#endif /* RODU4140_COLOR_HPP_ */
+#endif /* OCR_COLOR_HPP_ */

@@ -1,8 +1,37 @@
 # Numeric-Digit-OCR
 
-## 1. Description
+An Optical Character Recognition (OCR) system designed to recognize numeric 
+digits using statistical methods.
 
-An Optical Character Recognition (OCR) system designed to recognize numeric digits using statistical methods.
+This project was implemented during University. The design
+of this does not necessarily reflect the quality of decisions that 
+would be made if this were to be done again from scratch.
+
+_**This project is no longer maintained**_
+
+## Features
+
+- [x] Color to grayscale conversion for BMP images 
+- [x] Applies filters (in the form of matrix kernels) to images
+- [x] Scan images to create database of glyphs (handwritten black/white 
+  image strokes)
+- [x] Detects hand-written numeric digits based, using database files 
+  (`data/database`) for feature analysis
+
+## How to build
+
+This project is set up using the CMake build system.
+Building is as simple as making a directory to build, configuring the project,
+and building it:
+
+```sh
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build .
+```
+
+The binary will be found in the root of the build directory.
 
 ## <a name="license"></a>License
 
